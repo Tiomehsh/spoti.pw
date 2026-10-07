@@ -82,9 +82,9 @@ static void report(SPTPlayerState *state) {
     if ([line isEqualToString:last]) return;
     last = line;
     lastAt = NSDate.date;
-    SGLogLong(@"player state", line);
+    SGLogLong(@"播放器状态", line);
     SPTPlayerTrack *track = state.track;
-    if (track) SGLogLong(@"player track metadata", track.metadata.description);
+    if (track) SGLogLong(@"播放器曲目元数据", track.metadata.description);
 }
 
 %hook SPTEsperantoPlayer
@@ -103,7 +103,7 @@ static void report(SPTPlayerState *state) {
     if (!SGIsDebugBuild() || enabled) return;
     static NSUInteger logged;
     if (logged++ >= 4) return;
-    SGLogLong(@"play button disabled", [NSThread.callStackSymbols componentsJoinedByString:@"\n"]);
+    SGLogLong(@"播放按钮已禁用", [NSThread.callStackSymbols componentsJoinedByString:@"\n"]);
 }
 %end
 

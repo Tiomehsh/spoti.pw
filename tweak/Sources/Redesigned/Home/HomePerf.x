@@ -66,7 +66,7 @@ void SGRHomeProbeEnd(SGRHomeProbe probe, CFTimeInterval began) {
     _last = _worst = _frameSum = 0;
     _frames = _hitches = _dropped = _settled = _described = 0;
     _layouts = 1;
-    SGHangSamplerStart(@"home scroll", 0);
+    SGHangSamplerStart(@"主页滚动", 0);
     memcpy(_calls, sg_calls, sizeof(_calls));
     memcpy(_time, sg_time, sizeof(_time));
     _link = [CADisplayLink displayLinkWithTarget:self selector:@selector(tick:)];
@@ -168,7 +168,7 @@ static BOOL isHomeTab(UIViewController *page) {
     SGLog(@"home perf: measuring the scrolls of %@", NSStringFromClass(sg_list.class));
     // The lag reported came in the first half minute after launch, scrolling or not.
     static dispatch_once_t once;
-    dispatch_once(&once, ^{ SGHangSamplerStart(@"after launch", 90); });
+    dispatch_once(&once, ^{ SGHangSamplerStart(@"启动后", 90); });
 }
 %end
 

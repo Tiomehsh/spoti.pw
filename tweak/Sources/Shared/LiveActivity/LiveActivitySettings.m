@@ -4,14 +4,14 @@
 #import "LiveActivity.h"
 
 static NSArray<NSString *> *viewNames(void) {
-    return @[@"Lyrics", @"Queue", @"Control menu"];
+    return @[@"歌词", @"队列", @"控制菜单"];
 }
 
 UIViewController *SGLiveActivitySettingsPage(void) {
-    SGModRow *on = SGOptionRow(@"Live Activity", nil, SGKeyLiveActivity);
+    SGModRow *on = SGOptionRow(@"实时活动", nil, SGKeyLiveActivity);
     on.changed = ^(BOOL value) { SGSetLiveActivityEnabled(value); };
-    SGModRow *view = SGChoiceRow(@"Shows", nil, SGKeyLiveActivityView, viewNames(), SGLiveActivityLyrics);
-    return [[SGModPage alloc] initWithTitle:@"Live Activity" intro:nil sections:@[
+    SGModRow *view = SGChoiceRow(@"节目", nil, SGKeyLiveActivityView, viewNames(), SGLiveActivityLyrics);
+    return [[SGModPage alloc] initWithTitle:@"实时活动" intro:nil sections:@[
         SGSection(nil, @[on, view]),
     ] footer:nil];
 }

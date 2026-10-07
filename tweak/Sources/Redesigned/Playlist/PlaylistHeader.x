@@ -350,8 +350,8 @@ static void showPlaylist(SGRHeaderInfo *info, UIView *block, UIView *root, id mo
     if (!logged && info.window && (title || play)) {
         logged = YES;
         SGLog(@"redesign playlist: own block \"%@\" by %@, \"%@\"; shuffle %@, play %@, %@; model %@",
-              title, creatorIn(block) ?: @"nobody", lengthIn(block) ?: @"no length", shuffle ? @"found" : @"missing",
-              play ? @"found" : @"missing", save ? @"save" : (download ? @"download" : @"nothing on the right"),
+              title, creatorIn(block) ?: @"nobody", lengthIn(block) ?: @"无长度", shuffle ? @"found" : @"missing",
+              play ? @"found" : @"missing", save ? @"save" : (download ? @"download" : @"右侧无内容"),
               model ? NSStringFromClass([model class]) : @"missing");
     }
 }

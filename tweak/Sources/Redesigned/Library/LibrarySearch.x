@@ -49,7 +49,7 @@ static void capsule(UIView *shape) {
     if (!logged && field.bounds.size.height > 1) {
         logged = YES;
         SGLog(@"redesign library: search field %@ at r=%.1f, cancel %@", NSStringFromCGRect(field.bounds),
-              field.layer.cornerRadius, cancel ? @"a capsule too" : @"not found");
+              field.layer.cornerRadius, cancel ? @"a capsule too" : @"未找到");
     }
 }
 %end

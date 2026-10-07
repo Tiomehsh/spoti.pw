@@ -39,8 +39,8 @@ static const uint8_t *propertyBytes(id object, const char *name, size_t length) 
 
 static BOOL stateFromIdentifier(NSString *identifier, SGRDownloadState *state) {
     NSDictionary<NSString *, NSNumber *> *states = @{
-        @"None": @(SGRDownloadNone), @"Waiting": @(SGRDownloadWaiting), @"Downloading": @(SGRDownloadDownloading),
-        @"Downloaded": @(SGRDownloadDownloaded), @"Error": @(SGRDownloadError),
+        @"无": @(SGRDownloadNone), @"等待中": @(SGRDownloadWaiting), @"下载中": @(SGRDownloadDownloading),
+        @"已下载": @(SGRDownloadDownloaded), @"错误": @(SGRDownloadError),
     };
     NSNumber *found = states[[identifier substringFromIndex:kIdentifierPrefix.length]];
     if (!found) return NO;

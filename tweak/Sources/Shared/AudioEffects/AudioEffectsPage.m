@@ -101,54 +101,54 @@ static NSString *graphicEqSummary(void) {
         points++;
         flat &= parts[1].doubleValue == 0;
     }
-    return flat ? @"Flat" : [NSString stringWithFormat:@"%lu points", (unsigned long)points];
+    return flat ? @"平直" : [NSString stringWithFormat:@"%lu points", (unsigned long)points];
 }
 
 // The effects' cards. The engine runs them in an order of its own (SGDSPEngine.m).
 static NSArray<SGDSPEffect *> *effects(void) {
     // Stored as 0 to 100 around 50, shown as the side's level, 100% leaving it as it is.
-    SGDSPRow *width = slider(@"Width", SGKeyDSPStereoWideLevel, @"%");
+    SGDSPRow *width = slider(@"宽度", SGKeyDSPStereoWideLevel, @"%");
     width.scale = 2;
     return @[
-        effect(nil, @"Output control", @"Gain and limiter, always on", @"speaker.wave.2", @[
-            slider(@"Post gain", SGKeyDSPPostGain, @" dB"),
-            slider(@"Limiter threshold", SGKeyDSPLimiterThreshold, @" dB"),
-            slider(@"Limiter release", SGKeyDSPLimiterRelease, @" ms"),
+        effect(nil, @"输出控制", @"增益与限制器,常开", @"speaker.wave.2", @[
+            slider(@"后置增益", SGKeyDSPPostGain, @" dB"),
+            slider(@"限制器阈值", SGKeyDSPLimiterThreshold, @" dB"),
+            slider(@"限制器释放", SGKeyDSPLimiterRelease, @" ms"),
         ]),
-        effect(SGKeyDSPCompander, @"Multiband compander", @"Evens out or livens up the dynamics", @"rectangle.compress.vertical", @[
+        effect(SGKeyDSPCompander, @"多段压缩扩展器", @"抚平或增强动态", @"rectangle.compress.vertical", @[
             row(SGDSPRowCurve, nil, SGKeyDSPCompanderGains),
-            slider(@"Release", SGKeyDSPCompanderTime, @" s"),
+            slider(@"发行", SGKeyDSPCompanderTime, @" s"),
         ]),
-        effect(SGKeyDSPBass, @"Bass boost", @"Lifts the low end", @"hifispeaker", @[
-            slider(@"Maximum gain", SGKeyDSPBassGain, @" dB"),
+        effect(SGKeyDSPBass, @"低音增强", @"提升低频", @"hifispeaker", @[
+            slider(@"最大增益", SGKeyDSPBassGain, @" dB"),
         ]),
-        effect(SGKeyDSPEqualizer, @"Equalizer", @"15 bands, with presets", @"slider.vertical.3", @[
+        effect(SGKeyDSPEqualizer, @"均衡器", @"15 bands, with presets", @"slider.vertical.3", @[
             row(SGDSPRowCurve, nil, SGKeyDSPEqualizerGains),
         ]),
-        effect(SGKeyDSPGraphicEq, @"Graphic EQ", @"Any curve, like AutoEq's corrections", @"chart.xyaxis.line", @[
-            pageRow(@"Response", ^NSString *{ return graphicEqSummary(); }, ^UIViewController *{ return SGDSPGraphicEqPage(); }),
+        effect(SGKeyDSPGraphicEq, @"图形均衡器", @"任意曲线,如 AutoEq 校正", @"chart.xyaxis.line", @[
+            pageRow(@"响应", ^NSString *{ return graphicEqSummary(); }, ^UIViewController *{ return SGDSPGraphicEqPage(); }),
         ]),
-        effect(SGKeyDSPConvolver, @"Convolver", @"Recorded rooms and speakers", @"waveform.path", @[
-            fileRow(@"Impulse response", SGDSPFileImpulseResponse),
-            choice(@"Optimization", SGKeyDSPConvolverMode, SGDSPConvolverModeNames()),
+        effect(SGKeyDSPConvolver, @"卷积器", @"录制的房间与扬声器", @"waveform.path", @[
+            fileRow(@"脉冲响应", SGDSPFileImpulseResponse),
+            choice(@"优化", SGKeyDSPConvolverMode, SGDSPConvolverModeNames()),
         ]),
-        effect(SGKeyDSPDDC, @"ViPER DDC", @"Headphone correction files", @"headphones", @[
-            fileRow(@"DDC file", SGDSPFileDDC),
+        effect(SGKeyDSPDDC, @"ViPER DDC", @"耳机校正文件", @"headphones", @[
+            fileRow(@"DDC 文件", SGDSPFileDDC),
         ]),
-        effect(SGKeyDSPLiveprog, @"Liveprog", @"Effects written as EEL scripts", @"chevron.left.forwardslash.chevron.right", @[
-            fileRow(@"Script", SGDSPFileLiveprog),
+        effect(SGKeyDSPLiveprog, @"Liveprog", @"以 EEL 脚本编写的效果", @"chevron.left.forwardslash.chevron.right", @[
+            fileRow(@"脚本", SGDSPFileLiveprog),
         ]),
-        effect(SGKeyDSPReverb, @"Reverb", @"A room around the music", @"building.columns", @[
-            choice(@"Room", SGKeyDSPReverbPreset, SGDSPReverbPresetNames()),
+        effect(SGKeyDSPReverb, @"混响", @"A room around the music", @"building.columns", @[
+            choice(@"房间", SGKeyDSPReverbPreset, SGDSPReverbPresetNames()),
         ]),
-        effect(SGKeyDSPStereoWide, @"Stereo widening", @"A wider or narrower stereo image", @"arrow.left.and.right", @[
+        effect(SGKeyDSPStereoWide, @"立体声加宽", @"A wider or narrower stereo image", @"arrow.left.and.right", @[
             width,
         ]),
-        effect(SGKeyDSPCrossfeed, @"Crossfeed", @"Softer stereo on headphones", @"ear", @[
-            choice(@"Preset", SGKeyDSPCrossfeedMode, SGDSPCrossfeedModeNames()),
+        effect(SGKeyDSPCrossfeed, @"交叉馈送", @"耳机上更柔和的立体声", @"ear", @[
+            choice(@"预设", SGKeyDSPCrossfeedMode, SGDSPCrossfeedModeNames()),
         ]),
-        effect(SGKeyDSPTube, @"Analog modelling", @"Tube amplifier warmth", @"flame", @[
-            slider(@"Drive", SGKeyDSPTubeDrive, @" dB"),
+        effect(SGKeyDSPTube, @"模拟建模", @"电子管放大器温暖感", @"flame", @[
+            slider(@"驱动", SGKeyDSPTubeDrive, @" dB"),
         ]),
     ];
 }
@@ -415,7 +415,7 @@ static UIView *valueAndChevron(NSString *text) {
 
 - (instancetype)init {
     if (!(self = [super initWithStyle:UITableViewStyleInsetGrouped])) return nil;
-    self.title = @"Audio effects";
+    self.title = @"音频效果";
     _effects = effects();
     _open = [NSMutableSet set];
     _errors = [NSMutableDictionary dictionary];
@@ -424,7 +424,7 @@ static UIView *valueAndChevron(NSString *text) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _intro = SGNote(@"Changes apply straight away.");
+    _intro = SGNote(@"更改立即生效。");
     self.tableView.tableHeaderView = _intro;
     [self buildCredits];
     self.tableView.tableFooterView = _credits;
@@ -433,7 +433,7 @@ static UIView *valueAndChevron(NSString *text) {
 // The libraries two of the effects run on, in the grey of a note with the names as links.
 - (void)buildCredits {
     NSDictionary *grey = @{NSFontAttributeName: SGSubtitleFont(), NSForegroundColorAttributeName: SGGrey()};
-    NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:@"Crossfeed is " attributes:grey];
+    NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:@"交叉馈送为" attributes:grey];
     NSArray<NSArray<NSString *> *> *parts = @[
         @[@"libbs2b", @"https://github.com/alexmarsev/libbs2b"], @[@" by Boris Mikhaylov. Liveprog runs on ", @""],
         @[@"EEL2", @"https://github.com/justinfrankel/WDL"], @[@", from Cockos' WDL.", @""],
@@ -578,14 +578,14 @@ static UIView *valueAndChevron(NSString *text) {
 - (UITableViewCell *)tableView:(UITableView *)table cellForRowAtIndexPath:(NSIndexPath *)path {
     if (path.section == 0) {
         UITableViewCell *cell = SGDequeueCell(table, @"master");
-        [self fillHead:cell title:@"Effects" subtitle:SGDSPStatus() symbol:@"waveform"];
+        [self fillHead:cell title:@"效果" subtitle:SGDSPStatus() symbol:@"waveform"];
         cell.accessoryView = [self switchOn:SGDSPSwitch(SGKeyDSP) action:@selector(masterToggled:) tag:0];
         return cell;
     }
     SGDSPEffect *e = [self effectIn:path.section];
     if (!e) {
         UITableViewCell *cell = SGDequeueCell(table, @"reset");
-        SGFillCell(cell, @"Reset all effects", nil, SGRed(), @"arrow.counterclockwise");
+        SGFillCell(cell, @"重置所有效果", nil, SGRed(), @"arrow.counterclockwise");
         UIListContentConfiguration *content = (UIListContentConfiguration *)cell.contentConfiguration;
         content.secondaryTextProperties.color = SGRed();
         cell.contentConfiguration = content;
@@ -650,7 +650,7 @@ static UIView *valueAndChevron(NSString *text) {
 // Red, the way Settings' warning rows are: the effect's last change did not take, and why.
 - (UITableViewCell *)errorCell:(UITableView *)table text:(NSString *)text {
     UITableViewCell *cell = SGDequeueCell(table, @"error");
-    SGFillCell(cell, @"Not applied", text, SGRed(), @"exclamationmark.triangle.fill");
+    SGFillCell(cell, @"未应用", text, SGRed(), @"exclamationmark.triangle.fill");
     UIListContentConfiguration *content = (UIListContentConfiguration *)cell.contentConfiguration;
     content.secondaryTextProperties.color = SGRed();
     cell.contentConfiguration = content;
@@ -739,17 +739,17 @@ static UIView *valueAndChevron(NSString *text) {
 }
 
 - (void)confirmReset {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Reset all effects?"
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"重置所有效果?"
         message:@"Every effect goes off, and every value, curve and file choice back to its default. The Effects switch and your imported files stay."
         preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"Reset" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+    [alert addAction:[UIAlertAction actionWithTitle:@"重置" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
         SGDSPResetAll();
         [self readState];
         [UIView transitionWithView:self.tableView duration:0.25 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
             [self.tableView reloadData];
         } completion:nil];
     }]];
-    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     [self presentViewController:alert animated:YES completion:nil];
 }
 

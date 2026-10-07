@@ -173,8 +173,8 @@ static void get(NSURL *url, NSString *token, void (^done)(NSString *body, NSInte
     request.allowsConstrainedNetworkAccess = NO;
     [request setValue:kBrowser forHTTPHeaderField:@"User-Agent"];
     if (token) {
-        [request setValue:[@"Bearer " stringByAppendingString:token] forHTTPHeaderField:@"Authorization"];
-        [request setValue:@"https://music.apple.com" forHTTPHeaderField:@"Origin"];
+        [request setValue:[@"Bearer " stringByAppendingString:token] forHTTPHeaderField:@"授权"];
+        [request setValue:@"https://music.apple.com" forHTTPHeaderField:@"来源"];
     }
     [[NSURLSession.sharedSession dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         NSInteger status = [response isKindOfClass:NSHTTPURLResponse.class] ? ((NSHTTPURLResponse *)response).statusCode : 0;
@@ -246,7 +246,7 @@ static void clipIn(NSURL *playlist, void (^done)(NSURL *file, NSString *note)) {
 static void search(NSString *token, NSString *artist, NSString *album, BOOL tall, NSString *known, BOOL mayRetry,
                    void (^done)(SGCanvas *canvas, NSString *note)) {
     if (!token) {
-        done(nil, @"no Apple Music token");
+        done(nil, @"无 Apple Music 令牌");
         return;
     }
     NSURLComponents *components = [NSURLComponents componentsWithString:kSearch];
@@ -268,7 +268,7 @@ static void search(NSString *token, NSString *artist, NSString *album, BOOL tall
         }
         id root = status == 200 ? [NSJSONSerialization JSONObjectWithData:[body dataUsingEncoding:NSUTF8StringEncoding] ?: [NSData data] options:0 error:nil] : nil;
         if (![root isKindOfClass:NSDictionary.class]) {
-            done(nil, [NSString stringWithFormat:@"the search answered %ld", (long)status]);
+            done(nil, [NSString stringWithFormat:@"搜索返回 %ld", (long)status]);
             return;
         }
         id results = root[@"results"];
@@ -276,7 +276,7 @@ static void search(NSString *token, NSString *artist, NSString *album, BOOL tall
         NSURL *playlist = SGAppleCoverPlaylist([albums isKindOfClass:NSDictionary.class] ? albums[@"data"] : nil, artist, album, tall);
         if (!playlist) {
             sg_known[known] = NSNull.null;
-            done(nil, @"no animated cover");
+            done(nil, @"无动态封面");
             return;
         }
         clipIn(playlist, ^(NSURL *file, NSString *note) {
@@ -296,18 +296,18 @@ static void search(NSString *token, NSString *artist, NSString *album, BOOL tall
 
 void SGAppleArtworkFind(NSString *artist, NSString *album, BOOL tall, void (^done)(SGCanvas *canvas, NSString *note)) {
     if (![artist isKindOfClass:NSString.class] || ![album isKindOfClass:NSString.class] || !artist.length || !album.length) {
-        done(nil, @"no artist or album to look up");
+        done(nil, @"无艺人或专辑可查");
         return;
     }
     if (!sg_known) sg_known = [NSMutableDictionary dictionary];
     NSString *known = [NSString stringWithFormat:@"%d\n%@\n%@", tall, plain(artist), plain(album)];
     id before = sg_known[known];
     if (before) {
-        done(before == NSNull.null ? nil : before, @"known from before");
+        done(before == NSNull.null ? nil : before, @"之前已知");
         return;
     }
     if (CFAbsoluteTimeGetCurrent() < sg_quietUntil) {
-        done(nil, @"Apple Music asked for a pause");
+        done(nil, @"Apple Music 请求暂停");
         return;
     }
     // The lock screen and the player ask for the same album on the same track: one search answers both.

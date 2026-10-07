@@ -12,7 +12,7 @@
 %end
 
 %ctor {
-    SGRedesignForceFlags(@"glass design", @{
+    SGRedesignForceFlags(@"玻璃设计", @{
         @"ios-reprise-liquid-glass-properties.context_menu_in_navigation_bar_enabled": @YES,
         @"ios-feature-encoreexperiments.new_npv_slider_enabled": @YES,
         @"ios-feature-nowplaying.sheet_style_npv": @YES,

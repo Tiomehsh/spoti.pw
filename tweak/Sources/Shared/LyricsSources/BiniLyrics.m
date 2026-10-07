@@ -65,7 +65,7 @@ SGLyricsAsk SGBiniLyricsAsk = ^(SGLyricsQuery *query, void (^done)(SGLyricsResul
             result.starts = starts;
             result.texts = texts;
             SGLog(@"binilyrics: %@ by %@ has %lu %@ lines", query.title, query.artist,
-                  (unsigned long)lines.count, result.wordTimed ? @"word timed" : @"line timed");
+                  (unsigned long)lines.count, result.wordTimed ? @"逐字计时" : @"行计时");
             done(result);
         });
     });

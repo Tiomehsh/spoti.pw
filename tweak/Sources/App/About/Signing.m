@@ -64,13 +64,13 @@ static void showFix(void) {
         @"Why: this build is installed as %@ but signed under the App ID %@. iOS opens the now "
         @"playing card by the App ID, so it asks for an app that is not there. Nothing else in the "
         @"mod is affected.", appID, bundleID, appID];
-    UIAlertController *sheet = [UIAlertController alertControllerWithTitle:@"The lock screen cannot open Spotify"
+    UIAlertController *sheet = [UIAlertController alertControllerWithTitle:@"锁屏无法打开 Spotify"
                                                                   message:message
                                                            preferredStyle:UIAlertControllerStyleAlert];
-    [sheet addAction:[UIAlertAction actionWithTitle:@"Copy the bundle id" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [sheet addAction:[UIAlertAction actionWithTitle:@"复制 Bundle ID" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         UIPasteboard.generalPasteboard.string = appID;
     }]];
-    [sheet addAction:[UIAlertAction actionWithTitle:@"Read more" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [sheet addAction:[UIAlertAction actionWithTitle:@"阅读更多" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         SGOpenURL(SGSigningHelpURL);
     }]];
     [sheet addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
@@ -80,8 +80,8 @@ static void showFix(void) {
 // nil while the signature is sound, which is what keeps the row out of Mod Settings entirely.
 SGModRow *SGSigningWarningRow(void) {
     if (SGSigningOpensFromLockScreen()) return nil;
-    return SGWarningRow(@"The lock screen cannot open Spotify",
-                        @"Tap for the fix",
+    return SGWarningRow(@"锁屏无法打开 Spotify",
+                        @"点按修复",
                         ^{ showFix(); });
 }
 

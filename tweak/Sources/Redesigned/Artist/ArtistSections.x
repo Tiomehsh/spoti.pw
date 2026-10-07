@@ -155,7 +155,7 @@ static void logOnce(NSString *what) {
     }
     settle(cell, MAX(1, result.size.height));
     result.size = CGSizeMake(result.size.width, 0);
-    logOnce(@"the videos dropped from the Music list");
+    logOnce(@"视频已从音乐列表移除");
     return result;
 }
 

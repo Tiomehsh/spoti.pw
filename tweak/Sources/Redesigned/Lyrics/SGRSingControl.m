@@ -249,8 +249,8 @@ static SGRSingLook lookOf(SGSingState state) {
     _fill.userInteractionEnabled = NO;
     _fill.backgroundColor = [UIColor colorWithWhite:1 alpha:kFillWhite];
     _slider = [SGRVocalSlider new];
-    _slider.accessibilityLabel = @"Vocal volume";
-    _slider.accessibilityHint = @"Original vocals at the top, 20 percent at the bottom";
+    _slider.accessibilityLabel = @"人声音量";
+    _slider.accessibilityHint = @"顶部原始人声,底部 20%%";
     _slider.accessibilityIdentifier = @"sing.vocalLevel";
     [_slider addTarget:self action:@selector(changed) forControlEvents:UIControlEventValueChanged];
     // The capsule draws on and off itself: a custom button, so UIKit adds no highlight or selected look.
@@ -314,21 +314,21 @@ static SGRSingLook lookOf(SGSingState state) {
     SGSingState state = _shown;
     SGRSingLook look = lookOf(state);
     BOOL original = _slider.value >= 1;
-    _slider.accessibilityValue = original ? @"Original" : [NSString stringWithFormat:@"%.0f percent", _slider.value * 100];
+    _slider.accessibilityValue = original ? @"原始" : [NSString stringWithFormat:@"%.0f percent", _slider.value * 100];
     _button.accessibilityLabel = @"Sing";
-    _button.accessibilityValue = state == SGSingPreparing ? @"Preparing Sing" : state == SGSingRecovering ? @"Restoring Sing"
-        : state == SGSingDraining ? @"Turning Sing off" : state == SGSingFailed ? @"Sing stopped"
-        : look.on ? (original ? @"On, original vocals" : [NSString stringWithFormat:@"On, %.0f percent vocals", _slider.value * 100])
+    _button.accessibilityValue = state == SGSingPreparing ? @"正在准备 Sing" : state == SGSingRecovering ? @"正在恢复 Sing"
+        : state == SGSingDraining ? @"正在关闭 Sing" : state == SGSingFailed ? @"Sing 已停止"
+        : look.on ? (original ? @"开,原始人声" : [NSString stringWithFormat:@"开,人声 %.0f%%", _slider.value * 100])
         : @"Off";
-    _button.accessibilityHint = state == SGSingPreparing ? @"Tap to cancel." : state == SGSingDraining ? @"Tap to turn Sing back on."
-        : state == SGSingFailed ? @"Tap to hear why Sing stopped."
-        : look.on ? (_expanded ? @"Tap to turn Sing off. Drag to adjust the vocals." : @"Tap for the vocal volume.")
-        : @"Turns the song's vocals down on this iPhone.";
+    _button.accessibilityHint = state == SGSingPreparing ? @"点按取消。" : state == SGSingDraining ? @"点按重新开启 Sing。"
+        : state == SGSingFailed ? @"点按了解 Sing 停止原因。"
+        : look.on ? (_expanded ? @"点按关闭 Sing。拖动调整人声。" : @"点按调整人声音量。")
+        : @"在此 iPhone 上降低歌曲人声。";
     _button.accessibilityTraits = UIAccessibilityTraitButton | (look.on ? UIAccessibilityTraitSelected : 0);
     // Off from wherever the button is, without opening the capsule first.
     __weak typeof(self) weak = self;
     _button.accessibilityCustomActions = look.on || look.preparing ? @[[[UIAccessibilityCustomAction alloc]
-        initWithName:@"Turn Off Sing" actionHandler:^BOOL(UIAccessibilityCustomAction *action) { [weak turnOff]; return YES; }]] : nil;
+        initWithName:@"关闭 Sing" actionHandler:^BOOL(UIAccessibilityCustomAction *action) { [weak turnOff]; return YES; }]] : nil;
 }
 
 - (void)refresh { [self refreshAnimated:self.window != nil]; }
@@ -569,12 +569,12 @@ static SGRSingLook lookOf(SGSingState state) {
     [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         [weak finishedExplaining];
     }]];
-    if (SGSingCanRetry()) [alert addAction:[UIAlertAction actionWithTitle:@"Try again" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    if (SGSingCanRetry()) [alert addAction:[UIAlertAction actionWithTitle:@"重试" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [weak finishedExplaining];
         // Thermal state and the playback route can change while the alert is on screen.
         if (SGSingCanRetry()) [weak turnOn];
     }]];
-    if (SGSingCurrentState() == SGSingFailed) [alert addAction:[UIAlertAction actionWithTitle:@"Turn off Sing" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    if (SGSingCurrentState() == SGSingFailed) [alert addAction:[UIAlertAction actionWithTitle:@"关闭 Sing" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [weak finishedExplaining];
         [weak turnOff];
     }]];

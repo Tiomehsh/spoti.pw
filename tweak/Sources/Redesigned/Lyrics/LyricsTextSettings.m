@@ -14,7 +14,7 @@
 
 - (instancetype)init {
     if (!(self = [super initWithStyle:UITableViewStyleInsetGrouped])) return nil;
-    self.title = @"Text sizes";
+    self.title = @"文字大小";
     return self;
 }
 
@@ -22,7 +22,7 @@
     [super viewDidLoad];
     _order = [SGRLyricsTextOrder() mutableCopy];
     self.tableView.editing = YES;
-    _footer = SGNote(@"Pronunciation and translation are turned on from the button in the lyrics' corner.");
+    _footer = SGNote(@"发音与翻译由歌词角落的按钮开启。");
     self.tableView.tableFooterView = _footer;
 }
 
@@ -41,7 +41,7 @@
 }
 
 - (UIView *)tableView:(UITableView *)table viewForHeaderInSection:(NSInteger)section {
-    return SGSectionHeader(table, @"Largest first");
+    return SGSectionHeader(table, @"最大优先");
 }
 
 - (CGFloat)tableView:(UITableView *)table heightForHeaderInSection:(NSInteger)section {
@@ -55,7 +55,7 @@
 - (UITableViewCell *)tableView:(UITableView *)table cellForRowAtIndexPath:(NSIndexPath *)path {
     UITableViewCell *cell = SGDequeueCell(table, @"text");
     SGRLyricsText text = _order[(NSUInteger)path.row].integerValue;
-    NSArray<NSString *> *sizes = @[@"Largest", @"Smaller", @"Smallest"];
+    NSArray<NSString *> *sizes = @[@"最大", @"较小", @"最小"];
     NSString *symbol = text == SGRLyricsTextLyrics ? @"music.mic" : text == SGRLyricsTextPronunciation ? @"character.phonetic" : @"character.bubble";
     SGFillCell(cell, SGRLyricsTextName(text), sizes[MIN((NSUInteger)path.row, sizes.count - 1)], nil, symbol);
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -89,5 +89,5 @@
 @end
 
 SGModRow *SGRLyricsTextSizesRow(void) {
-    return SGPageRow(@"Text sizes", ^UIViewController *{ return [SGRLyricsTextPage new]; });
+    return SGPageRow(@"文字大小", ^UIViewController *{ return [SGRLyricsTextPage new]; });
 }

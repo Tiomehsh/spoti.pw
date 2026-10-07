@@ -133,11 +133,11 @@ static void workerStatus(void *context, int32_t status) {
     [NSNotificationCenter.defaultCenter postNotificationName:SGSingDidChangeNotification object:nil];
 }
 - (NSString *)restriction {
-    if (_interrupted) return @"Sing will be ready when the audio interruption ends.";
-    if (overheated()) return @"Let your iPhone cool down before using Sing again.";
+    if (_interrupted) return @"音频中断结束后 Sing 将就绪。";
+    if (overheated()) return @"让 iPhone 冷却后再使用 Sing。";
     for (AVAudioSessionPortDescription *port in AVAudioSession.sharedInstance.currentRoute.outputs)
-        if ([port.portType isEqualToString:AVAudioSessionPortAirPlay]) return @"Sing is unavailable over AirPlay.";
-    if (!isSong(trackOf(SGPlayerState()))) return @"Play a song on this iPhone to use Sing.";
+        if ([port.portType isEqualToString:AVAudioSessionPortAirPlay]) return @"Sing 无法通过 AirPlay 使用。";
+    if (!isSong(trackOf(SGPlayerState()))) return @"在此 iPhone 上播放歌曲以使用 Sing。";
     return nil;
 }
 - (void)startTimer {
@@ -194,7 +194,7 @@ static void workerStatus(void *context, int32_t status) {
     session.track = trackOf(state);
     session.audio = SGSingAudioCreate((SGAudioStamp){++_generation, SGSingTrackIdentifier(session.track), 0, 1, 0},
                                       SGSingWindowFrames, SGSingHopFrames, _level);
-    if (!session.audio) { _blockedTrack = session.track; [self publish:SGSingFailed explanation:@"There is not enough memory to start Sing."]; return; }
+    if (!session.audio) { _blockedTrack = session.track; [self publish:SGSingFailed explanation:@"内存不足,无法启动 Sing。"]; return; }
     SGSingStreamSetModelReady(stream(session), false);
     _session = session;
     [self prepareNextTrack:state];
@@ -204,7 +204,7 @@ static void workerStatus(void *context, int32_t status) {
                                        readPCM, writePCM, workerStatus);
     if (!session.worker) {
         CFRelease(context); session.finished = YES; _session = nil; _blockedTrack = session.track;
-        [self publish:SGSingFailed explanation:@"The local voice model could not start."];
+        [self publish:SGSingFailed explanation:@"本地人声模型无法启动。"];
     } else [self publish:SGSingPreparing explanation:nil];
     [self startTimer];
 }
@@ -331,7 +331,7 @@ static void workerStatus(void *context, int32_t status) {
         if (state && !state.isLoading && changed) _waitingForCommand = NO;
         else if (CACurrentMediaTime() > _commandDeadline) {
             _waitingForCommand = NO; _blockedTrack = trackOf(state);
-            [self publish:SGSingFailed explanation:@"Playback changed. Tap Sing to prepare the current position."];
+            [self publish:SGSingFailed explanation:@"播放已改变。点按 Sing 以准备当前位置。"];
         }
     }
     if (!_session && _wanted && !_waitingForCommand && !_blockedTrack) [self start];
@@ -374,7 +374,7 @@ static void workerStatus(void *context, int32_t status) {
         if (!self.session && !self.wanted) return;
         self.cooling = YES;
         [self stop:NO unload:YES];
-        if (self.state != SGSingUnavailable) [self publish:SGSingFailed explanation:@"Sing stopped so your iPhone can cool down."];
+        if (self.state != SGSingUnavailable) [self publish:SGSingFailed explanation:@"Sing 已停止以便 iPhone 散热。"];
     });
 }
 - (void)route:(NSNotification *)note {

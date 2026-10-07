@@ -57,7 +57,7 @@ SGLyricsAsk SGUnisonAsk = ^(SGLyricsQuery *query, void (^done)(SGLyricsResult *r
         result.starts = starts;
         result.texts = texts;
         SGLog(@"unison: %@ by %@ has %lu %@ lines (%@ confidence)", query.title, query.artist,
-              (unsigned long)lines.count, result.wordTimed ? @"word timed" : @"line timed", data[@"confidence"]);
+              (unsigned long)lines.count, result.wordTimed ? @"逐字计时" : @"行计时", data[@"confidence"]);
         done(result);
     });
 };

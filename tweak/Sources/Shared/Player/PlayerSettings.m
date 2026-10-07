@@ -5,14 +5,14 @@
 #import "Shared/LockScreenArtwork/LockScreenArtwork.h"
 
 UIViewController *SGLockScreenWidgetPage(void) {
-    return [[SGModPage alloc] initWithTitle:@"Lock screen widget" intro:SGRestartNote sections:@[
-        SGSection(@"Controls", @[
-            SGFlagRow(@"Like and dislike buttons", @"ios-feature-lockscreen.like_dislike_enabled"),
-            SGFlagRow(@"Skip button on podcasts", @"ios-feature-lockscreen.skip_button_on_podcasts"),
-            SGFlagRow(@"Chapter skip controls", @"ios-feature-lockscreen.enable_chapter_skip_controls"),
-            SGFlagRow(@"Burst skip", @"ios-feature-lockscreen.burst_skip_enabled"),
+    return [[SGModPage alloc] initWithTitle:@"锁屏小组件" intro:SGRestartNote sections:@[
+        SGSection(@"控制", @[
+            SGFlagRow(@"喜欢与不喜欢按钮", @"ios-feature-lockscreen.like_dislike_enabled"),
+            SGFlagRow(@"播客上的跳过按钮", @"ios-feature-lockscreen.skip_button_on_podcasts"),
+            SGFlagRow(@"章节跳过控制", @"ios-feature-lockscreen.enable_chapter_skip_controls"),
+            SGFlagRow(@"连续跳过", @"ios-feature-lockscreen.burst_skip_enabled"),
         ]),
-        SGSection(@"Artwork", [SGAnimatedArtworkRows() arrayByAddingObject:
-            SGFlagRow(@"Companion content", @"ios-feature-lockscreen.companion_content_enabled")]),
+        SGSection(@"封面", [SGAnimatedArtworkRows() arrayByAddingObject:
+            SGFlagRow(@"附属内容", @"ios-feature-lockscreen.companion_content_enabled")]),
     ] footer:nil];
 }

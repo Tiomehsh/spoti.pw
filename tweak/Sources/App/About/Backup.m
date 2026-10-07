@@ -22,7 +22,7 @@ static NSDictionary *storedDefaults(void) {
 static void showAlert(NSString *title, NSString *message, UIAlertAction *confirm) {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     if (confirm) [alert addAction:confirm];
-    [alert addAction:[UIAlertAction actionWithTitle:confirm ? @"Cancel" : @"OK" style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:confirm ? @"取消" : @"OK" style:UIAlertActionStyleCancel handler:nil]];
     [SGTopController() presentViewController:alert animated:YES completion:nil];
 }
 
@@ -85,12 +85,12 @@ static void importSettings(NSDictionary *settings) {
     id file = data ? [NSJSONSerialization JSONObjectWithData:data options:0 error:nil] : nil;
     NSDictionary *settings = [file isKindOfClass:NSDictionary.class] ? file[@"settings"] : nil;
     if (![settings isKindOfClass:NSDictionary.class]) {
-        showAlert(@"Not a settings file", @"Pick a file made by Export settings.", nil);
+        showAlert(@"不是设置文件", @"选择由导出设置生成的文件。", nil);
         return;
     }
     NSString *mod = [file[@"mod"] isKindOfClass:NSString.class] ? file[@"mod"] : @"unknown";
     NSString *message = [NSString stringWithFormat:@"Your settings are replaced by the file's, exported from version %@. Anything it does not have goes back to its default, and Spotify restarts.", mod];
-    showAlert(@"Import settings?", message, [UIAlertAction actionWithTitle:@"Import and restart" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+    showAlert(@"导入设置?", message, [UIAlertAction actionWithTitle:@"导入并重启" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
         importSettings(settings);
     }]);
 }

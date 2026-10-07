@@ -126,7 +126,7 @@ static CGFloat screenRadius(void) {
 
     static NSUInteger logged;
     if (logged++ < 3) SGLog(@"player morph: card %@ r=%.0f, artwork %@, cover %@, screen r=%.0f", NSStringFromCGRect(card), radius,
-                            NSStringFromCGRect(_barArtwork), _cover ? @"flown" : @"not flown", screenRadius());
+                            NSStringFromCGRect(_barArtwork), _cover ? @"flown" : @"未流过", screenRadius());
     return self;
 }
 

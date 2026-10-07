@@ -151,7 +151,7 @@ static void playGlyph(UIView *host) {
         if ([sub isKindOfClass:UIImageView.class] && CGSizeEqualToSize(sub.bounds.size, button.bounds.size)) disc = (UIImageView *)sub;
     }
     if (!disc) {
-        logMissing(@"the play button's disc");
+        logMissing(@"播放按钮的圆盘");
         return;
     }
     SGRSuppress(disc);
@@ -295,7 +295,7 @@ static void seekOnTap(UISlider *slider, CGPoint point) {
     }
     SGPlayFeedback(SGFeedbackSkip);
     static NSUInteger logged;
-    if (logged++ < 3) SGLog(@"redesign player: tap to seek from %.3f to %.3f (%@), now %.3f", was, value, own ? @"its own touch" : @"played as a drag", slider.value);
+    if (logged++ < 3) SGLog(@"redesign player: tap to seek from %.3f to %.3f (%@), now %.3f", was, value, own ? @"其自身触控" : @"作为拖动播放", slider.value);
 }
 
 // Watches the band around the bar for a tap and never recognizes, so it holds up, cancels and stands in
@@ -396,7 +396,7 @@ static void seekOnTap(UISlider *slider, CGPoint point) {
 static void watchForSeekTaps(UIView *host, UILabel *taken, UILabel *remaining) {
     UISlider *slider = (UISlider *)SGRFindByIdentifier(host, @"SPTNowPlayingSliderV2", &kSliderKey);
     if (![slider isKindOfClass:UISlider.class]) {
-        logMissing(@"the position slider");
+        logMissing(@"位置滑块");
         return;
     }
     SGRSeekTapWatcher *watcher = objc_getAssociatedObject(host, &kSeekWatcherKey);

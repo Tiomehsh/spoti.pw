@@ -91,7 +91,7 @@ BOOL SGROpenPlayerFromBar(void) {
     SGForEachView(container, ^(UIView *v) {
         for (UIGestureRecognizer *r in v.gestureRecognizers) [out appendFormat:@"\n  %@ on %@", r, NSStringFromClass(v.class)];
     });
-    SGLogLong(@"mini player", out);
+    SGLogLong(@"迷你播放器", out);
     return NO;
 }
 

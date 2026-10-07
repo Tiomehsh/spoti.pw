@@ -7,7 +7,7 @@
 #import "LockScreenArtwork.h"
 
 static void sayWhatIsMissing(void) {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Animated lock screen"
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"动态锁屏"
         message:[NSString stringWithFormat:@"Animated artwork is the lock screen's own, and iOS takes one only from 26 on. This phone runs iOS %@, where the cover stays still.", UIDevice.currentDevice.systemVersion]
         preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
@@ -16,14 +16,14 @@ static void sayWhatIsMissing(void) {
 
 static NSArray<SGOrderItem *> *sources(void) {
     return @[
-        SGOrderItemMake(SGArtworkSourceSpotify, @"Spotify Canvas", @"The track's own clip"),
-        SGOrderItemMake(SGArtworkSourceApple, @"Apple Music", @"The album's animated cover"),
+        SGOrderItemMake(SGArtworkSourceSpotify, @"Spotify Canvas", @"曲目自己的片段"),
+        SGOrderItemMake(SGArtworkSourceApple, @"Apple Music", @"专辑的动态封面"),
     ];
 }
 
 SGModRow *SGArtworkSourcesRow(NSString *key, NSString *note) {
-    SGModRow *row = SGPageRow(@"Sources", ^UIViewController *{
-        return SGOrderPage(@"Artwork sources", sources(), ^NSArray<NSString *> *{ return SGArtworkOrderFor(key); },
+    SGModRow *row = SGPageRow(@"来源", ^UIViewController *{
+        return SGOrderPage(@"封面来源", sources(), ^NSArray<NSString *> *{ return SGArtworkOrderFor(key); },
                            ^(NSArray<NSString *> *keys) { SGArtworkSetOrderFor(key, keys); }, note);
     });
     row.value = ^NSString *{
@@ -33,19 +33,19 @@ SGModRow *SGArtworkSourcesRow(NSString *key, NSString *note) {
                 if ([item.key isEqualToString:source]) [names addObject:item.name];
             }
         }
-        return names.count ? [names componentsJoinedByString:@", "] : @"None";
+        return names.count ? [names componentsJoinedByString:@", "] : @"无";
     };
     return row;
 }
 
 NSArray<SGModRow *> *SGAnimatedArtworkRows(void) {
     if (!SGAnimatedArtworkAvailable())
-        return @[SGStatActionRow(@"Animated lock screen", nil, ^NSString *{ return @"Needs iOS 26"; }, ^{ sayWhatIsMissing(); })];
+        return @[SGStatActionRow(@"动态锁屏", nil, ^NSString *{ return @"需要 iOS 26"; }, ^{ sayWhatIsMissing(); })];
     SGModRow *order = SGArtworkSourcesRow(SGKeyLockScreenArtworkSources,
         @"Asked top to bottom until one has a clip. Apple Music gets only the artist and album name.");
     order.visible = ^BOOL { return SGFlag(SGKeyLockScreenArtwork, YES); };
     return @[
-        SGSwitchRow(@"Animated lock screen", @"A moving cover behind the lock screen's controls", SGKeyLockScreenArtwork),
+        SGSwitchRow(@"动态锁屏", @"A moving cover behind the lock screen's controls", SGKeyLockScreenArtwork),
         order,
     ];
 }

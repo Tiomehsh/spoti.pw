@@ -5,11 +5,11 @@
 static NSString *const kSpicyDashboard = @"https://developers.spicylyrics.org/dashboard";
 
 static SGModSection *spicySection(void) {
-    SGModRow *key = SGTextRow(@"Spicy Lyrics key",
+    SGModRow *key = SGTextRow(@"Spicy Lyrics 密钥",
         @"Paste the publishable key (sl_pk_…) of your application on Spicy Lyrics' developer platform.", @"sl_pk_…",
         ^NSString *{
             NSString *shown = SGSpicyLyricsKeyShown();
-            return !shown ? @"Not set" : SGSpicyLyricsProblem() ? @"Rejected" : shown;
+            return !shown ? @"未设置" : SGSpicyLyricsProblem() ? @"已拒绝" : shown;
         },
         ^NSString *(NSString *text) { return SGSpicyLyricsSetKey(text); });
     key.refreshOn = SGSpicyLyricsKeyDidChangeNotification;
@@ -28,7 +28,7 @@ UIViewController *SGLyricsSourcesPage(void) {
         if ([provider.key isEqualToString:@"spicylyrics"]) item.problem = ^NSString *{ return SGSpicyLyricsProblem(); };
         [items addObject:item];
     }
-    return SGOrderPageWithSection(@"Lyrics sources", items, ^NSArray<NSString *> *{ return SGLyricsOrder(); },
+    return SGOrderPageWithSection(@"歌词来源", items, ^NSArray<NSString *> *{ return SGLyricsOrder(); },
                                   ^(NSArray<NSString *> *order) { SGLyricsSetOrder(order); },
                                   @"Asked top to bottom until one has word timing. Sources get only the track, never "
                                    "your account.", spicySection());

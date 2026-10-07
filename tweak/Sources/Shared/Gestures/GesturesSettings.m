@@ -107,7 +107,7 @@ static NSString *cellLabel(SGGestureAction action) {
 
 - (instancetype)init {
     if (!(self = [super initWithStyle:UITableViewStyleInsetGrouped])) return nil;
-    self.title = @"Gestures";
+    self.title = @"手势";
     return self;
 }
 
@@ -123,7 +123,7 @@ static NSString *cellLabel(SGGestureAction action) {
     _header.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     [_header addSubview:_grid];
     self.tableView.tableHeaderView = _header;
-    _footer = SGNote(@"Spotify's own buttons keep their taps.");
+    _footer = SGNote(@"Spotify 自带按钮保持其点按。");
     self.tableView.tableFooterView = _footer;
 }
 
@@ -144,7 +144,7 @@ static NSString *cellLabel(SGGestureAction action) {
 
 - (void)pickActionFor:(NSInteger)cell {
     NSArray<NSString *> *names = SGGestureActionNames();
-    UIAlertController *sheet = [UIAlertController alertControllerWithTitle:@"Double tap here"
+    UIAlertController *sheet = [UIAlertController alertControllerWithTitle:@"双击此处"
                                                                   message:nil
                                                            preferredStyle:UIAlertControllerStyleActionSheet];
     [names enumerateObjectsUsingBlock:^(NSString *name, NSUInteger index, BOOL *stop) {
@@ -153,7 +153,7 @@ static NSString *cellLabel(SGGestureAction action) {
             [self refresh];
         }]];
     }];
-    [sheet addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+    [sheet addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     sheet.popoverPresentationController.sourceView = _grid;
     sheet.popoverPresentationController.sourceRect = _grid.bounds;
     [self presentViewController:sheet animated:YES completion:nil];
@@ -172,8 +172,8 @@ static NSString *cellLabel(SGGestureAction action) {
 }
 
 - (UIView *)tableView:(UITableView *)table viewForHeaderInSection:(NSInteger)section {
-    if (section == 1) return SGSectionHeader(table, @"Split");
-    if (section == 2) return SGSectionHeader(table, @"Seek step");
+    if (section == 1) return SGSectionHeader(table, @"拆分");
+    if (section == 2) return SGSectionHeader(table, @"跳转步长");
     return nil;
 }
 
@@ -189,7 +189,7 @@ static NSString *cellLabel(SGGestureAction action) {
     UITableViewCell *cell = SGDequeueCell(table, @"gesture");
     switch (path.section) {
         case 0: {
-            SGFillCell(cell, @"Double tap the player", @"Tap a cell to set it", nil, nil);
+            SGFillCell(cell, @"双击播放器", @"点按单元格进行设置", nil, nil);
             UISwitch *toggle = [UISwitch new];
             toggle.onTintColor = SGGreen();
             toggle.on = SGFlag(SGKeyGestures, NO);
@@ -212,7 +212,7 @@ static NSString *cellLabel(SGGestureAction action) {
             break;
         }
         default:
-            SGFillCell(cell, @"Start over", nil, nil, @"arrow.uturn.backward");
+            SGFillCell(cell, @"重新开始", nil, nil, @"arrow.uturn.backward");
             cell.selectionStyle = UITableViewCellSelectionStyleDefault;
             break;
     }

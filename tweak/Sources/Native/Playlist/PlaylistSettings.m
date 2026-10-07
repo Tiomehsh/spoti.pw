@@ -2,26 +2,26 @@
 #import "Playlist.h"
 
 UIViewController *SGPlaylistSettingsPage(void) {
-    return [[SGModPage alloc] initWithTitle:@"Playlists" intro:nil sections:@[
-        SGSection(@"Header", @[
-            SGOptionRow(@"Artwork background", nil, SGKeyPlaylistBackdrop),
+    return [[SGModPage alloc] initWithTitle:@"播放列表" intro:nil sections:@[
+        SGSection(@"头部", @[
+            SGOptionRow(@"封面背景", nil, SGKeyPlaylistBackdrop),
         ]),
-        SGSection(@"Hide in the playlist header", @[
-            SGHideRow(@"Cover artwork", nil, SGHidePlaylistArtwork),
-            SGHideRow(@"Description", nil, SGHidePlaylistDescription),
-            SGHideRow(@"Creator and collaborators", nil, SGHidePlaylistCreator),
-            SGHideRow(@"Length and saves", nil, SGHidePlaylistLength),
+        SGSection(@"在歌单头部隐藏", @[
+            SGHideRow(@"封面图", nil, SGHidePlaylistArtwork),
+            SGHideRow(@"描述", nil, SGHidePlaylistDescription),
+            SGHideRow(@"创作者与协作者", nil, SGHidePlaylistCreator),
+            SGHideRow(@"长度与保存", nil, SGHidePlaylistLength),
         ]),
-        SGSection(@"Hide playlist buttons", @[
-            SGHideRow(@"Video", nil, SGHidePlaylistVideo),
-            SGHideRow(@"Add to library", nil, SGHidePlaylistAddTo),
-            SGHideRow(@"Download", nil, SGHidePlaylistDownload),
-            SGHideRow(@"Share", nil, SGHidePlaylistShare),
-            SGHideRow(@"More", nil, SGHidePlaylistMore),
+        SGSection(@"隐藏歌单按钮", @[
+            SGHideRow(@"视频", nil, SGHidePlaylistVideo),
+            SGHideRow(@"添加到音乐库", nil, SGHidePlaylistAddTo),
+            SGHideRow(@"下载", nil, SGHidePlaylistDownload),
+            SGHideRow(@"分享", nil, SGHidePlaylistShare),
+            SGHideRow(@"更多", nil, SGHidePlaylistMore),
         ]),
-        SGSection(@"Hide above the tracks", @[
-            SGHideRow(@"Curation pills", nil, SGHidePlaylistPills),
-            SGHideRow(@"Find and sort bar", nil, SGHidePlaylistFind),
+        SGSection(@"在曲目上方隐藏", @[
+            SGHideRow(@"精选标签", nil, SGHidePlaylistPills),
+            SGHideRow(@"查找与排序栏", nil, SGHidePlaylistFind),
         ]),
     ] footer:nil];
 }

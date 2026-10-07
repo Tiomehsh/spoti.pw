@@ -92,7 +92,7 @@ static void backWithGlass(UIView *snapshot, UIView *source, NSString *what) {
     %orig;
 }
 - (void)setTabBarSnapshotView:(UIView *)view {
-    backWithGlass(view, [self tabBarView], @"tab bar");
+    backWithGlass(view, [self tabBarView], @"标签栏");
     %orig;
 }
 %end
@@ -109,7 +109,7 @@ static id ivarNamed(id object, const char *name) {
     dispatch_once(&once, ^{ SGLog(@"player transition: CompactOverlayTransition animates, snapshots %@ / %@",
                                   [ivarNamed(self, "npbSnapshotView") class], [ivarNamed(self, "tabBarSnapshotView") class]); });
     backWithGlass(ivarNamed(self, "npbSnapshotView"), ivarNamed(self, "npbView"), @"bar");
-    backWithGlass(ivarNamed(self, "tabBarSnapshotView"), ivarNamed(self, "tabBarView"), @"tab bar");
+    backWithGlass(ivarNamed(self, "tabBarSnapshotView"), ivarNamed(self, "tabBarView"), @"标签栏");
 }
 %end
 

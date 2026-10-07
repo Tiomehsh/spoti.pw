@@ -95,7 +95,7 @@ static void finish(UIViewController *unit, BOOL changed) {
     BOOL changed = NO;
     for (UIView *item in SGRowIn(((UIViewController *)self).viewIfLoaded).arrangedSubviews) {
         if (item.hidden || item.bounds.size.width < 20) continue;
-        if (SGHasClass(item, @"Connect")) {
+        if (SGHasClass(item, @"连接")) {
             if (SGHidden(SGHideConnect)) changed |= vanish(item);
         } else if (SGHasClass(item, @"QueueButton")) {
             if (SGHidden(SGHideQueue)) changed |= vanish(item);

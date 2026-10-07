@@ -4,22 +4,22 @@
 
 UIViewController *SGAlbumSettingsPage(void) {
     NSArray<SGModSection *> *sections = @[
-        SGSection(@"Header", @[
-            SGOptionRow(@"Artwork background", nil, SGKeyAlbumBackdrop),
+        SGSection(@"头部", @[
+            SGOptionRow(@"封面背景", nil, SGKeyAlbumBackdrop),
         ]),
-        SGSection(@"Hide in the header", @[
+        SGSection(@"在头部隐藏", @[
             SGHideRow(@"Explore (video deck)", nil, SGHideAlbumExplore),
-            SGHideRow(@"Add to library", nil, SGHideAlbumAddTo),
-            SGHideRow(@"Download", nil, SGHideAlbumDownload),
-            SGHideRow(@"More options", nil, SGHideAlbumMore),
+            SGHideRow(@"添加到音乐库", nil, SGHideAlbumAddTo),
+            SGHideRow(@"下载", nil, SGHideAlbumDownload),
+            SGHideRow(@"更多选项", nil, SGHideAlbumMore),
         ]),
-        SGNotedSection(@"Hide on the page", @[
-            SGHideRow(@"More by the artist", nil, SGHideAlbumMoreBy),
-            SGHideRow(@"Related music videos", nil, SGHideAlbumVideos),
-            SGHideRow(@"Concerts", nil, SGHideAlbumConcerts),
-            SGHideRow(@"Merch", nil, SGHideAlbumMerch),
-            SGHideRow(@"You might also like", nil, SGHideAlbumYouMightLike),
-        ], @"Works only with Spotify in English."),
+        SGNotedSection(@"在页面隐藏", @[
+            SGHideRow(@"该艺人更多作品", nil, SGHideAlbumMoreBy),
+            SGHideRow(@"相关音乐视频", nil, SGHideAlbumVideos),
+            SGHideRow(@"演出", nil, SGHideAlbumConcerts),
+            SGHideRow(@"周边", nil, SGHideAlbumMerch),
+            SGHideRow(@"你可能也喜欢", nil, SGHideAlbumYouMightLike),
+        ], @"仅在 Spotify 为英文时有效。"),
     ];
-    return [[SGModPage alloc] initWithTitle:@"Album" intro:nil sections:sections footer:nil];
+    return [[SGModPage alloc] initWithTitle:@"专辑" intro:nil sections:sections footer:nil];
 }

@@ -466,8 +466,8 @@ static SGRHeaderInfo *applyInfo(UIView *header, UIView *page) {
     if (!logged && header.window && title) {
         logged = YES;
         SGLog(@"redesign album: own block \"%@\" by %@, \"%@\"; shuffle %@, play %@, %@", firstText(title),
-              firstText(parent) ?: @"nobody", metadataText(metadata) ?: @"no metadata", shuffle ? @"found" : @"missing",
-              play ? @"found" : @"missing", add ? @"add" : (download ? @"download" : @"nothing on the right"));
+              firstText(parent) ?: @"nobody", metadataText(metadata) ?: @"无元数据", shuffle ? @"found" : @"missing",
+              play ? @"found" : @"missing", add ? @"add" : (download ? @"download" : @"右侧无内容"));
     }
     return info;
 }

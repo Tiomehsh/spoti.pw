@@ -100,7 +100,7 @@ void SGArtworkFetch(NSString *identifier, NSString *address, void (^done)(NSURL 
 NSURLSessionTask *SGArtworkFetchAside(NSString *identifier, NSString *address, void (^done)(NSURL *file, NSString *note)) {
     NSURL *remote = address.length ? [NSURL URLWithString:address] : nil;
     if (!remote) {
-        done(nil, @"no address");
+        done(nil, @"无地址");
         return nil;
     }
     NSURL *local = fileFor([identifier stringByAppendingPathExtension:@"mp4"]);
@@ -154,11 +154,11 @@ static void crop(AVURLAsset *asset, AVAssetTrack *track, NSURL *into, CGFloat as
     CGAffineTransform upright;
     CGSize shown = shownSize(track, &upright);
     if (shown.width < 2 || shown.height < 2) {
-        done(nil, @"no picture");
+        done(nil, @"无图片");
         return;
     }
     if (fabs(shown.width / shown.height - aspect) < kAspectSlack) {
-        done(asset.URL, @"already the right shape");
+        done(asset.URL, @"已是正确形状");
         return;
     }
     CGSize render = shown.width / shown.height > aspect ? CGSizeMake(even(shown.height * aspect), even(shown.height))
@@ -177,7 +177,7 @@ static void crop(AVURLAsset *asset, AVAssetTrack *track, NSURL *into, CGFloat as
 
     AVAssetExportSession *export = [AVAssetExportSession exportSessionWithAsset:asset presetName:AVAssetExportPresetHighestQuality];
     if (!export) {
-        done(nil, @"no exporter");
+        done(nil, @"无导出器");
         return;
     }
     export.outputURL = into;
@@ -197,7 +197,7 @@ void SGArtworkCrop(NSURL *file, NSString *identifier, CGFloat aspect, void (^don
     NSURL *into = fileFor([NSString stringWithFormat:@"%@-%.2f.mp4", identifier, aspect]);
     if ([NSFileManager.defaultManager fileExistsAtPath:into.path]) {
         dispatch_async(queue(), ^{ touch(into); });
-        done(into, @"cropped already");
+        done(into, @"已裁剪");
         return;
     }
     AVURLAsset *asset = [AVURLAsset URLAssetWithURL:file options:nil];

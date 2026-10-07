@@ -141,7 +141,7 @@ SGLyricsAsk SGLrcLibAsk = ^(SGLyricsQuery *query, void (^done)(SGLyricsResult *r
             NSDictionary *record = bestOf(found, query.seconds);
             SGLyricsResult *result = resultFrom(record);
             SGLog(@"lrclib: search for %@ by %@ gave %@", query.title, query.artist,
-                  !result ? @"nothing" : result.instrumental ? @"an instrumental"
+                  !result ? @"nothing" : result.instrumental ? @"一首伴奏"
                   : result.synced ? [NSString stringWithFormat:@"%lu timed lines", (unsigned long)result.karaokeLines.count]
                   : [NSString stringWithFormat:@"%lu untimed lines", (unsigned long)result.texts.count]);
             done(result);

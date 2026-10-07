@@ -18,7 +18,7 @@ static void holdAtTop(UIScrollView *list) {
 
     if (sg_loggedList == list) return;
     sg_loggedList = list;
-    SGLog(@"redesign player: scroll held at the top, %.0fpt up taken back (%@)", past, list.isDragging ? @"drag" : @"no finger");
+    SGLog(@"redesign player: scroll held at the top, %.0fpt up taken back (%@)", past, list.isDragging ? @"drag" : @"无手指");
 }
 
 %hook _TtC21NowPlaying_ScrollImpl23NPVScrollViewController

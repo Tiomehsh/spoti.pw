@@ -88,11 +88,11 @@ void SGShowDonateSheet(void) {
     sheet.color = SGKofiColor();
     sheet.hero = hero(&cup, &heart);
     sheet.eyebrow = @"A STUDENT PROJECT";
-    sheet.heading = @"Enjoying spoti.pw?";
+    sheet.heading = @"喜欢 spoti.pw 吗?";
     sheet.body = @"I'm a student and I build it for free, in my spare time. If it made your music better, a coffee helps me keep going.";
-    sheet.actionTitle = @"Buy me a coffee";
+    sheet.actionTitle = @"请我喝杯咖啡";
     sheet.actionSymbol = @"cup.and.saucer.fill";
-    sheet.dismissTitle = @"Maybe later";
+    sheet.dismissTitle = @"稍后再说";
     sheet.action = ^{
         askAgainIn(kAfterDonating);
         SGLog(@"donate: opened Ko-fi");
@@ -106,7 +106,7 @@ void SGShowDonateSheet(void) {
 }
 
 SGModRow *SGDonateRow(void) {
-    SGModRow *row = SGWithSymbol(SGActionRow(@"Support spoti.pw", @"Buy the student behind it a coffee", ^{ SGShowDonateSheet(); }), @"cup.and.saucer.fill");
+    SGModRow *row = SGWithSymbol(SGActionRow(@"支持 spoti.pw", @"请作者学生喝杯咖啡", ^{ SGShowDonateSheet(); }), @"cup.and.saucer.fill");
     row.color = SGKofiColor();
     return row;
 }

@@ -177,5 +177,5 @@ static BOOL playingBy(NSDictionary *info) {
     sg_lock = [NSObject new];
     %init;
     // The timer waits for Spotify to report a playing track; nothing before that has a line to show.
-    SGLog(@"lock screen lyrics: on");
+    SGLog(@"锁屏歌词:开");
 }

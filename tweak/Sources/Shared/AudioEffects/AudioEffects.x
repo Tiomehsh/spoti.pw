@@ -238,9 +238,9 @@ static void prepareOutput(AudioUnit unit) {
 // An effect's name in the log, by its switch key.
 static NSString *effectName(NSString *effect) {
     NSDictionary<NSString *, NSString *> *names = @{
-        SGKeyDSPCompander: @"compander", SGKeyDSPBass: @"bass boost", SGKeyDSPEqualizer: @"equalizer", SGKeyDSPGraphicEq: @"graphic EQ",
+        SGKeyDSPCompander: @"compander", SGKeyDSPBass: @"低音增强", SGKeyDSPEqualizer: @"equalizer", SGKeyDSPGraphicEq: @"图形均衡器",
         SGKeyDSPConvolver: @"convolver", SGKeyDSPDDC: @"DDC", SGKeyDSPLiveprog: @"Liveprog", SGKeyDSPReverb: @"reverb",
-        SGKeyDSPStereoWide: @"stereo widening", SGKeyDSPCrossfeed: @"crossfeed", SGKeyDSPTube: @"analog modelling",
+        SGKeyDSPStereoWide: @"立体声加宽", SGKeyDSPCrossfeed: @"crossfeed", SGKeyDSPTube: @"模拟建模",
     };
     return names[effect] ?: effect;
 }
@@ -283,7 +283,7 @@ static NSString *libraryFile(SGDSPFileKind kind, NSString *nameKey, NSString *ef
     NSString *name = SGDSPString(nameKey);
     if (!on) return nil;
     if (!name.length) {
-        setError(effect, @"No file is chosen");
+        setError(effect, @"未选择文件");
         return nil;
     }
     NSString *path = [SGDSPLibraryDirectory(kind) stringByAppendingPathComponent:name.lastPathComponent];
@@ -533,8 +533,8 @@ NSString *SGDSPStatus(void) {
     if (!SGDSPSwitch(SGKeyDSP)) return @"Off";
     if (atomic_load(&sg_outputState) == SGOutputUnsupported) return @"Spotify's output is in a format the engine does not take";
     SGDSPEngine *engine = atomic_load(&sg_engine);
-    if (!SGAudioPipelineAvailable()) return @"Unavailable: Spotify's output could not be reached";
-    if (!engine || !atomic_load(&sg_running)) return @"Waiting for Spotify to play";
+    if (!SGAudioPipelineAvailable()) return @"不可用:无法访问 Spotify 的输出";
+    if (!engine || !atomic_load(&sg_running)) return @"等待 Spotify 播放";
     double rate = SGDSPEngineSampleRate(engine);
     double load = SGDSPEngineReadStats(engine, false).load;
     return [NSString stringWithFormat:@"Running at %@ kHz, %.1f%% load", [NSString stringWithFormat:@"%g", rate / 1000], load * 100];

@@ -169,8 +169,8 @@ static UIButton *glassButton(NSString *title) {
         }]];
     };
     UIStackView *links = [[UIStackView alloc] initWithArrangedSubviews:@[
-        link(@"Report a bug", 32, [SGRepoURL stringByAppendingString:@"/issues"]),
-        link(@"Ask on Discord", 16, SGDiscordURL),
+        link(@"报告 Bug", 32, [SGRepoURL stringByAppendingString:@"/issues"]),
+        link(@"在 Discord 提问", 16, SGDiscordURL),
     ]];
 
     UIStackView *note = [[UIStackView alloc] initWithArrangedSubviews:@[line, links]];
@@ -197,13 +197,13 @@ static UIButton *glassButton(NSString *title) {
     [strip addSubview:halo];
 
     UILabel *heading = [UILabel new];
-    heading.text = @"Pick your look.";
+    heading.text = @"选择你的外观。";
     heading.font = [UIFont systemFontOfSize:30 weight:UIFontWeightBold];
     heading.textColor = UIColor.whiteColor;
     heading.numberOfLines = 0;
 
-    _redesigned = [[SGLookCard alloc] initWithSymbol:@"sparkles" title:@"Redesigned" subtitle:@"Looks like Apple Music. Better lyrics, Live Activity."];
-    _legacy = [[SGLookCard alloc] initWithSymbol:@"slider.horizontal.3" title:@"Legacy" subtitle:@"More options, still looks like Spotify."];
+    _redesigned = [[SGLookCard alloc] initWithSymbol:@"sparkles" title:@"重设计" subtitle:@"形似 Apple Music,更好的歌词与实时活动。"];
+    _legacy = [[SGLookCard alloc] initWithSymbol:@"slider.horizontal.3" title:@"旧版" subtitle:@"更多选项,仍像 Spotify。"];
     for (SGLookCard *card in @[_redesigned, _legacy]) [card addTarget:self action:@selector(picked:) forControlEvents:UIControlEventTouchUpInside];
     // The first launch offers the redesign where it is tested; the tour again from the Mod page shows the stored look.
     BOOL redesign = SGFlag(SGKeyOnboardingSeen, NO) ? SGRedesignedUIStored() : SGRedesignTested();
@@ -226,10 +226,10 @@ static UIButton *glassButton(NSString *title) {
     [scroll addSubview:column];
     [self.view addSubview:scroll];
 
-    _primary = glassButton(@"Start listening");
+    _primary = glassButton(@"开始收听");
     [_primary addTarget:self action:@selector(finish) forControlEvents:UIControlEventTouchUpInside];
     UILabel *footer = [UILabel new];
-    footer.text = @"Hold Home to open settings.";
+    footer.text = @"长按主页打开设置。";
     footer.font = [UIFont systemFontOfSize:13];
     footer.textColor = SGGrey();
     footer.textAlignment = NSTextAlignmentCenter;
@@ -293,7 +293,7 @@ static UIButton *glassButton(NSString *title) {
 
 - (void)refresh {
     UIButtonConfiguration *config = _primary.configuration;
-    NSString *title = self.needsRestart ? @"Restart Spotify" : @"Start listening";
+    NSString *title = self.needsRestart ? @"重启 Spotify" : @"开始收听";
     config.attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:17 weight:UIFontWeightSemibold]}];
     _primary.configuration = config;
 }

@@ -43,9 +43,9 @@ static UIView *childNamed(UIView *host, NSString *marker) {
 }
 
 static NSString *tabName(UIWindow *window) {
-    if (sg_tabName || !window) return sg_tabName ?: @"Home";
+    if (sg_tabName || !window) return sg_tabName ?: @"主页";
     static NSUInteger tries;
-    if (tries >= kTitleTries) return @"Home";
+    if (tries >= kTitleTries) return @"主页";
     tries++;
     UIView *item = SGRFindByIdentifier(window, @"TabBar.Item.Home", &kTabKey);
     __block NSString *name = nil;
@@ -54,7 +54,7 @@ static NSString *tabName(UIWindow *window) {
     });
     if (!name) {
         if (tries == kTitleTries) SGLog(@"redesign home: the Home tab's name not found, the title stays English");
-        return @"Home";
+        return @"主页";
     }
     sg_tabName = [name copy];
     SGLog(@"redesign home: title \"%@\" from the tab bar", sg_tabName);
@@ -135,8 +135,8 @@ static void layoutHeader(UIViewController *page) {
     static dispatch_once_t once;
     dispatch_once(&once, ^{
         SGLog(@"redesign home: header %@, avatar %@ in the stack %@, title %@, scrim %@", NSStringFromCGRect(header.frame),
-              face ? NSStringFromCGRect(face.frame) : @"not found", NSStringFromCGRect(stack.frame), NSStringFromCGRect(frame),
-              sg_scrim ? @"found" : @"not found");
+              face ? NSStringFromCGRect(face.frame) : @"未找到", NSStringFromCGRect(stack.frame), NSStringFromCGRect(frame),
+              sg_scrim ? @"found" : @"未找到");
     });
 }
 

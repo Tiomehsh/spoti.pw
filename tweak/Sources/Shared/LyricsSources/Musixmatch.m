@@ -64,7 +64,7 @@ static NSURLRequest *requestFor(NSString *method, NSDictionary<NSString *, NSStr
     }];
     url.queryItems = items;
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url.URL cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:kTimeout];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"接受"];
     [request setValue:@"10.1.1" forHTTPHeaderField:@"x-mxm-app-version"];
     [request setValue:@"Musixmatch/2025120901 CFNetwork/3860.300.31 Darwin/25.2.0" forHTTPHeaderField:@"X-User-Agent"];
     return request;
@@ -284,7 +284,7 @@ static void ask(NSString *trackID, BOOL renewToken) {
                 return;
             }
             SGLyricsResult *lyrics = fromCalls(calls);
-            SGLog(@"musixmatch: %@ has %@", trackID, !lyrics ? @"no lyrics it may show"
+            SGLog(@"musixmatch: %@ has %@", trackID, !lyrics ? @"无可显示歌词"
                   : lyrics.wordTimed ? [NSString stringWithFormat:@"%lu word timed lines", (unsigned long)lyrics.karaokeLines.count]
                   : lyrics.synced ? [NSString stringWithFormat:@"%lu line timed lines", (unsigned long)lyrics.karaokeLines.count]
                   : [NSString stringWithFormat:@"%lu untimed lines", (unsigned long)lyrics.texts.count]);

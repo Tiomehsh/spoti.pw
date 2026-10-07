@@ -210,13 +210,13 @@ static void readFormat(AudioUnit unit) {
     BOOL hardwareRead = readScope(unit, kAudioUnitScope_Output, &sg_hardware, &hardware);
     static int logged;
     if (!clientRead || !hardwareRead) {
-        if (logged++ < 6) SGLog(@"redesign speed: the output is not linear PCM (Spotify's side %@, the hardware's %@)", clientRead ? @"is" : @"is not", hardwareRead ? @"is" : @"is not");
+        if (logged++ < 6) SGLog(@"redesign speed: the output is not linear PCM (Spotify's side %@, the hardware's %@)", clientRead ? @"is" : @"不是", hardwareRead ? @"is" : @"不是");
         if (!clientRead) return;
     }
     if (logged++ < 6) SGLog(@"redesign speed: Spotify's output is %.0f Hz, %u channels, %u bits, flags 0x%x, into the hardware's %.0f Hz, %u channels, %u bits, flags 0x%x, slices of %u, %@",
                             client.mSampleRate, (unsigned)client.mChannelsPerFrame, (unsigned)client.mBitsPerChannel, (unsigned)client.mFormatFlags,
                             hardware.mSampleRate, (unsigned)hardware.mChannelsPerFrame, (unsigned)hardware.mBitsPerChannel, (unsigned)hardware.mFormatFlags,
-                            SGAudioPipelineMaximumFrames(), tapped() ? @"fed through the menu's unit" : @"not taken over");
+                            SGAudioPipelineMaximumFrames(), tapped() ? @"fed through the menu's unit" : @"未接管");
 }
 
 static void apply(void);
@@ -278,8 +278,8 @@ static SGTimePitch *unitForFormat(void) {
         }
         atomic_store(slot, unit);
         if (pull) atomic_store(&sg_chain, unit);
-        SGLog(@"redesign speed: %@ %@ for %.0f Hz, %u channels", unit ? (varispeed ? @"a varispeed" : @"a unit") : @"no unit",
-              pull ? @"in the chain" : @"in place", rate, (unsigned)channels);
+        SGLog(@"redesign speed: %@ %@ for %.0f Hz, %u channels", unit ? (varispeed ? @"a varispeed" : @"a unit") : @"无单元",
+              pull ? @"在链路中" : @"就位", rate, (unsigned)channels);
         if (unit && wasEngaged) atomic_store(&sg_engaged, true);
     }
     pthread_mutex_unlock(&sg_buildLock);
@@ -290,7 +290,7 @@ static void report(void) {
     SGTimePitch *unit = atomic_load(tapped() ? &sg_chain : &sg_inPlace);
     if (!unit) return;
     SGLog(@"redesign speed: %.2fx, %@, %u underruns, %u failures, largest pull %u, %.1f s of input", sg_speed,
-          SGTimePitchIsVarispeed(unit) ? @"pitch following" : [NSString stringWithFormat:@"%+.0f st", sg_semitones],
+          SGTimePitchIsVarispeed(unit) ? @"音高跟随" : [NSString stringWithFormat:@"%+.0f st", sg_semitones],
           SGTimePitchUnderruns(unit), SGTimePitchFailures(unit), SGTimePitchLargestPull(unit),
           SGTimePitchConsumed(unit) / SGTimePitchSampleRate(unit));
 }
@@ -319,7 +319,7 @@ static void apply(void) {
         // Pitch began or stopped following speed: the other unit takes the chain over, from silence.
         disengage();
         atomic_store(&sg_chain, unit);
-        SGLog(@"redesign speed: the %@ takes over at %.2fx", SGTimePitchIsVarispeed(unit) ? @"varispeed" : @"time and pitch unit", sg_speed);
+        SGLog(@"redesign speed: the %@ takes over at %.2fx", SGTimePitchIsVarispeed(unit) ? @"varispeed" : @"时间与音高单元", sg_speed);
     }
     if (!normal && !atomic_load(&sg_engaged)) {
         disengage();

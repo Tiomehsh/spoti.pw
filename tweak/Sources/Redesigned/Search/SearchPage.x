@@ -83,7 +83,7 @@ static NSString *titleText(UIStackView *row) {
     for (UIView *sub in label.subviews) {
         if ([sub isKindOfClass:UILabel.class] && ((UILabel *)sub).text.length) return ((UILabel *)sub).text;
     }
-    return @"Search";
+    return @"搜索";
 }
 
 static UILabel *titleIn(UIStackView *row) {
@@ -135,7 +135,7 @@ static void layoutHeader(UIStackView *row) {
     if (!logged && row.window && CGRectGetMinX(row.frame) >= 0 && row.bounds.size.width > 0) {
         logged = YES;
         SGLog(@"redesign search: toolbar row %@, avatar %@, title %@ \"%@\", scrim %@", NSStringFromCGRect(row.frame),
-              face ? NSStringFromCGRect(face.frame) : @"not found", NSStringFromCGRect(frame), text, sg_scrim ? @"found" : @"not found");
+              face ? NSStringFromCGRect(face.frame) : @"未找到", NSStringFromCGRect(frame), text, sg_scrim ? @"found" : @"未找到");
     }
 }
 

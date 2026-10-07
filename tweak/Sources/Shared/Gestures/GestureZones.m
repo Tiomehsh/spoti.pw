@@ -3,12 +3,12 @@
 #import "Gestures.h"
 
 NSArray<NSString *> *SGGestureActionNames(void) {
-    return @[@"Nothing", @"Seek back", @"Seek forward", @"Play or pause", @"Next track",
-             @"Previous track", @"Shuffle", @"Repeat"];
+    return @[@"无", @"快退", @"快进", @"播放或暂停", @"下一曲",
+             @"上一曲", @"随机播放", @"重复"];
 }
 
 NSArray<NSString *> *SGGestureSplitNames(void) {
-    return @[@"Two columns", @"Three columns", @"Three by three"];
+    return @[@"两列", @"三列", @"三乘三"];
 }
 
 NSArray<NSNumber *> *SGGestureStepChoices(void) {

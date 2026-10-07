@@ -90,7 +90,7 @@ static void dropDJHeading(UIView *content) {
     for (UIView *part in stack.arrangedSubviews) {
         if (part.hidden || ![NSStringFromClass(part.class) containsString:@"Home_HeadingElementKit"]) continue;
         part.hidden = YES;
-        logOnce(@"DJ heading hidden");
+        logOnce(@"DJ 标题已隐藏");
     }
 }
 
@@ -150,9 +150,9 @@ static void expand(UICollectionViewCell *cell) {
     } else if (kind == SGRHomeKindKeep) {
         // Cells are reused across kinds: one collapsed before holds a section to keep now.
         if (collapsed) expand(cell);
-        logOnce([@"kept a section of " stringByAppendingString:rootName]);
+        logOnce([@"保留了一段" stringByAppendingString:rootName]);
     } else {
-        logOnce([@"sized a section before its root was in, left as it is: " stringByAppendingString:rootName ?: @"no root"]);
+        logOnce([@"sized a section before its root was in, left as it is: " stringByAppendingString:rootName ?: @"无 root"]);
     }
     SGRHomeProbeEnd(SGRHomeProbeSections, began);
     return result;

@@ -175,12 +175,12 @@ NSArray<SGLyricsProvider *> *SGLyricsAllProviders(void) {
             return provider;
         };
         all = @[
-            make(@"spicylyrics", @"Spicy Lyrics", @"Community syncs, word timing", SGSpicyLyricsAsk),
-            make(@"binilyrics", @"BiniLyrics", @"Apple Music word timing", SGBiniLyricsAsk),
-            make(@"musixmatch", @"Musixmatch", @"Spotify's licensed catalogue", SGMusixmatchAsk),
-            make(@"unison", @"Unison", @"Hand-timed, few tracks", SGUnisonAsk),
-            make(@"netease", @"NetEase", @"Word timing, censored", SGNetEaseAsk),
-            make(@"lrclib", @"LRCLIB", @"Line timing, open fallback", SGLrcLibAsk),
+            make(@"spicylyrics", @"Spicy Lyrics", @"社区同步,逐字歌词", SGSpicyLyricsAsk),
+            make(@"binilyrics", @"BiniLyrics", @"Apple Music 逐字歌词", SGBiniLyricsAsk),
+            make(@"musixmatch", @"Musixmatch", @"Spotify 授权曲库", SGMusixmatchAsk),
+            make(@"unison", @"齐奏", @"手动打轴,曲目较少", SGUnisonAsk),
+            make(@"netease", @"NetEase", @"逐字歌词,已审查", SGNetEaseAsk),
+            make(@"lrclib", @"LRCLIB", @"行计时,开放回退", SGLrcLibAsk),
         ];
     });
     return all;
@@ -321,8 +321,8 @@ static BOOL betterLines(SGLyricsResult *merged, SGLyricsResult *fresh) {
 
 static NSString *timingName(NSArray<SGKaraokeLine *> *lines) {
     switch (SGKaraokeLinesTiming(lines)) {
-        case SGKaraokeTimingWords: return @"word timed";
-        case SGKaraokeTimingLine: return @"line timed";
+        case SGKaraokeTimingWords: return @"逐字计时";
+        case SGKaraokeTimingLine: return @"行计时";
         default: return @"untimed";
     }
 }
@@ -586,7 +586,7 @@ void SGLyricsOpenCredit(SGLyricsCredit *credit) {
             SGOpenURL(link.absoluteString);
         }]];
     }];
-    [sheet addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+    [sheet addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
     sheet.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
     UIViewController *top = SGTopController();
     sheet.popoverPresentationController.sourceView = top.view;

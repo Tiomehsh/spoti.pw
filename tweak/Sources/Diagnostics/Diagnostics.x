@@ -149,7 +149,7 @@ static void startTreeServer(void) {
     static dispatch_once_t once;
     dispatch_once(&once, ^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            SGDumpScreen(@"now playing view");
+            SGDumpScreen(@"正在播放视图");
         });
     });
 }
@@ -161,7 +161,7 @@ static void startTreeServer(void) {
     SGLog(@"loaded, UIGlassEffect %@", NSClassFromString(@"UIGlassEffect") ? @"available" : @"missing");
     if (SGIsDebugBuild()) {
         [NSNotificationCenter.defaultCenter addObserverForName:UIApplicationDidEnterBackgroundNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
-            SGDumpScreen(@"on background");
+            SGDumpScreen(@"后台");
         }];
         startTreeServer();
         SGLog(@"debug build: backgrounding the app dumps the visible screen's view tree");

@@ -44,7 +44,7 @@ static BOOL isPlayerCard(UIView *content) {
     static NSMutableSet<NSString *> *logged;
     if (!logged) logged = [NSMutableSet set];
     UIView *root = content.subviews.firstObject.subviews.firstObject;
-    NSString *name = root ? NSStringFromClass(root.class) : @"nothing yet";
+    NSString *name = root ? NSStringFromClass(root.class) : @"暂无内容";
     if (![logged containsObject:name]) {
         [logged addObject:name];
         SGLog(@"redesign player: collapsed card root %@ (%lu kinds so far)", name, (unsigned long)logged.count);

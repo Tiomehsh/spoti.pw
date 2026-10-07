@@ -19,7 +19,7 @@ static const NSInteger kTries = 45;
 @implementation SGIncompatibility
 @end
 
-static NSString *const kReportLine = @"Please don't open issues or report bugs on Discord from this setup.";
+static NSString *const kReportLine = @"请勿就此配置在 Discord 上提 issue 或报 bug。";
 
 static NSString *runningVersion(void) {
     id version = [NSBundle.mainBundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
@@ -47,7 +47,7 @@ static NSArray<SGIncompatibility *> *incompatibilities(void) {
         if (SGEeveeLoaded()) {
             SGIncompatibility *eevee = [SGIncompatibility new];
             eevee.title = @"EeveeSpotify isn't supported";
-            eevee.subtitle = @"It is injected alongside spoti.pw";
+            eevee.subtitle = @"它与 spoti.pw 一同注入";
             eevee.message = [NSString stringWithFormat:
                 @"spoti.pw isn't made to run alongside EeveeSpotify. Both change the same parts of Spotify, "
                 @"so things break or behave in ways you don't expect.\n\n%@ Use an IPA without EeveeSpotify instead.",

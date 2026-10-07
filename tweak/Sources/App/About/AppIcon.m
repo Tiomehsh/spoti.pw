@@ -10,11 +10,11 @@
 // In the order the list shows them: the file in icons/, and the name the list gives it. Spotify is the
 // IPA's own icon, iOS's primary one.
 static NSArray<NSString *> *iconFiles(void) {
-    return @[@"Spotify", @"Glass", @"Green", @"White", @"Pink", @"Blue", @"Purple", @"Orange", @"Lime"];
+    return @[@"Spotify", @"玻璃", @"绿色", @"白色", @"粉色", @"蓝色", @"紫色", @"橙色", @"青柠"];
 }
 
 static NSArray<NSString *> *iconTitles(void) {
-    return @[@"Spotify", @"Liquid Glass", @"Green", @"White", @"Pink", @"Blue", @"Purple", @"Orange", @"Lime"];
+    return @[@"Spotify", @"液态玻璃", @"绿色", @"白色", @"粉色", @"蓝色", @"紫色", @"橙色", @"青柠"];
 }
 
 static NSString *alternateName(NSString *file) {
@@ -61,7 +61,7 @@ static UIImage *preview(NSString *file) {
 
 - (instancetype)init {
     if (!(self = [super initWithStyle:UITableViewStyleInsetGrouped])) return nil;
-    self.title = @"App icon";
+    self.title = @"应用图标";
     _files = availableFiles();
     _footer = SGNote(@"iOS confirms each change in an alert of its own. The name under the icon is set when the app is signed: rename it in Feather, Sideloadly or whatever signs it.");
     return self;
@@ -123,7 +123,7 @@ static UIImage *preview(NSString *file) {
             SGLog(@"app icon: %@ -> %@", file, error ?: @"set");
             [weakTable reloadData];
             if (!error) return;
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"The icon did not change"
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"图标未更改"
                                                                           message:error.localizedDescription
                                                                    preferredStyle:UIAlertControllerStyleAlert];
             [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
@@ -137,9 +137,9 @@ static UIImage *preview(NSString *file) {
 SGModRow *SGAppIconRow(void) {
     if (availableFiles().count < 2) return nil;
     if (@available(iOS 26.0, *)) {
-        SGModRow *row = SGPageRow(@"App icon", ^UIViewController *{ return [SGAppIconPage new]; });
+        SGModRow *row = SGPageRow(@"应用图标", ^UIViewController *{ return [SGAppIconPage new]; });
         row.value = ^NSString *{ return titleOf(currentFile()); };
         return row;
     }
-    return SGStatRow(@"App icon", ^NSString *{ return @"Needs iOS 26"; });
+    return SGStatRow(@"应用图标", ^NSString *{ return @"需要 iOS 26"; });
 }

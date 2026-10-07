@@ -12,11 +12,11 @@ static NSString *const SGDSPFileErrorDomain = @"spotifyglass.dsp.files";
 
 static NSString *libraryName(SGDSPFileKind kind) {
     switch (kind) {
-    case SGDSPFileImpulseResponse: return @"Convolver";
+    case SGDSPFileImpulseResponse: return @"卷积器";
     case SGDSPFileDDC: return @"DDC";
     case SGDSPFileLiveprog: return @"Liveprog";
     }
-    return @"Other";
+    return @"其他";
 }
 
 // The key naming the file an effect uses, and its switch, for a library.
@@ -123,9 +123,9 @@ static BOOL looksLike(SGDSPFileKind kind, NSData *data) {
 NSString *SGDSPImportFile(SGDSPFileKind kind, NSURL *url, NSError **error) {
     NSString *name = url.lastPathComponent;
     NSArray<NSString *> *extensions = SGDSPFileExtensions(kind);
-    NSString *kindName = kind == SGDSPFileImpulseResponse ? @"an impulse response" : kind == SGDSPFileDDC ? @"a DDC file" : @"a Liveprog script";
+    NSString *kindName = kind == SGDSPFileImpulseResponse ? @"一个脉冲响应" : kind == SGDSPFileDDC ? @"a DDC file" : @"a Liveprog script";
     if (!name.length || [name hasPrefix:@"."] || ![extensions containsObject:name.pathExtension.lowercaseString]) {
-        if (error) *error = fileError([NSString stringWithFormat:@"%@ is not %@ (.%@)", name ?: @"The file", kindName,
+        if (error) *error = fileError([NSString stringWithFormat:@"%@ is not %@ (.%@)", name ?: @"文件", kindName,
                                        [extensions componentsJoinedByString:@", ."]]);
         return nil;
     }

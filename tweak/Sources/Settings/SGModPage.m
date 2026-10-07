@@ -4,7 +4,7 @@
 #import "SGGlowSwitch.h"
 #import "Core/SGCore.h"
 
-NSString *const SGRestartNote = @"Changes apply after you restart Spotify.";
+NSString *const SGRestartNote = @"更改将在重启 Spotify 后生效。";
 
 @implementation SGModRow
 @end
@@ -257,13 +257,13 @@ SGModRow *SGTextRow(NSString *title, NSString *prompt, NSString *placeholder, NS
             field.smartQuotesType = UITextSmartQuotesTypeNo;
             field.clearButtonMode = UITextFieldViewModeWhileEditing;
         }];
-        [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+        [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
         if (value()) {
-            [alert addAction:[UIAlertAction actionWithTitle:@"Remove" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+            [alert addAction:[UIAlertAction actionWithTitle:@"移除" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
                 set(@"");
             }]];
         }
-        UIAlertAction *save = [UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIAlertAction *save = [UIAlertAction actionWithTitle:@"保存" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             NSString *text = [alert.textFields.firstObject.text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
             if (!text.length) return;
             NSString *problem = set(text);
@@ -817,7 +817,7 @@ static void showProgress(UITableViewCell *cell, SGModRow *row, BOOL animated) {
     UIImageSymbolConfiguration *symbol = [UIImageSymbolConfiguration configurationWithPointSize:17 weight:UIImageSymbolWeightRegular];
     [info setImage:[UIImage systemImageNamed:@"info.circle" withConfiguration:symbol] forState:UIControlStateNormal];
     info.tintColor = SGGrey();
-    info.accessibilityLabel = @"About this switch";
+    info.accessibilityLabel = @"关于此开关";
     [info addTarget:self action:@selector(infoTapped:) forControlEvents:UIControlEventTouchUpInside];
     [toggle sizeToFit];
     CGFloat side = 30, gap = 8, height = MAX(side, toggle.bounds.size.height);
@@ -861,7 +861,7 @@ static void showProgress(UITableViewCell *cell, SGModRow *row, BOOL animated) {
 // A locked row will not move, and nothing on it says why.
 - (void)explainLock {
     UIAlertController *alert = [UIAlertController
-        alertControllerWithTitle:@"Overridden by another setting"
+        alertControllerWithTitle:@"被另一设置覆盖"
                          message:@"Another switch is forcing this flag, so the row shows what it forces instead of taking a value of its own."
                   preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
@@ -872,7 +872,7 @@ static void showProgress(UITableViewCell *cell, SGModRow *row, BOOL animated) {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:[row.title stringByAppendingString:@" is unstable"]
                                                                   message:row.warning
                                                            preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"Open GitHub" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [alert addAction:[UIAlertAction actionWithTitle:@"打开 GitHub" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         SGOpenURL(SGRepoURL);
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];

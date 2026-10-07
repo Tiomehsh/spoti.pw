@@ -321,7 +321,7 @@ static __weak SGCardSheet *sg_showing;
 
     UIButtonConfiguration *config = [UIButtonConfiguration plainButtonConfiguration];
     config.baseForegroundColor = [UIColor colorWithWhite:1 alpha:0.6];
-    config.attributedTitle = [[NSAttributedString alloc] initWithString:self.dismissTitle ?: @"Not now"
+    config.attributedTitle = [[NSAttributedString alloc] initWithString:self.dismissTitle ?: @"暂不"
                                                              attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:15 weight:UIFontWeightMedium]}];
     UIButton *later = [UIButton buttonWithConfiguration:config primaryAction:nil];
     [later addTarget:self action:@selector(dismissCard) forControlEvents:UIControlEventTouchUpInside];

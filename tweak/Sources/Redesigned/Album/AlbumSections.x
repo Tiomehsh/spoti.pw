@@ -102,11 +102,11 @@ static void logOnce(NSString *what) {
     if (isKept(content)) {
         settle(cell, natural, kLead);
         result.size = CGSizeMake(result.size.width, natural + kLead);
-        logOnce(@"the album's own line and its copyright kept under the tracks");
+        logOnce(@"专辑自有行及其版权保留在曲目下");
     } else {
         settle(cell, natural, 0);
         result.size = CGSizeMake(result.size.width, 0);
-        logOnce(@"the sections under the tracks dropped");
+        logOnce(@"曲目下的分区已移除");
     }
     return result;
 }

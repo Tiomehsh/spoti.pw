@@ -4,39 +4,39 @@
 
 UIViewController *SGArtistSettingsPage(void) {
     NSArray<SGModSection *> *sections = @[
-        SGSection(@"Photo", @[
-            SGOptionRow(@"Fade into a blur", nil, SGKeyArtistPhotoFade),
+        SGSection(@"照片", @[
+            SGOptionRow(@"淡入模糊", nil, SGKeyArtistPhotoFade),
         ]),
-        SGSection(@"Hide in the header", @[
+        SGSection(@"在头部隐藏", @[
             SGHideRow(@"Explore (video deck)", nil, SGHideArtistExplore),
-            SGHideRow(@"Follow", nil, SGHideArtistFollow),
-            SGHideRow(@"More options", nil, SGHideArtistMore),
-            SGHideRow(@"Shuffle", nil, SGHideArtistShuffle),
-            SGHideRow(@"Verified badge", nil, SGHideArtistVerified),
-            SGHideRow(@"Monthly listeners", nil, SGHideArtistListeners),
+            SGHideRow(@"关注", nil, SGHideArtistFollow),
+            SGHideRow(@"更多选项", nil, SGHideArtistMore),
+            SGHideRow(@"随机播放", nil, SGHideArtistShuffle),
+            SGHideRow(@"认证徽章", nil, SGHideArtistVerified),
+            SGHideRow(@"月度听众", nil, SGHideArtistListeners),
         ]),
-        SGSection(@"Tabs", @[
-            SGHideRow(@"Hide the tab bar", nil, SGHideArtistTabBar),
+        SGSection(@"标签页", @[
+            SGHideRow(@"隐藏标签栏", nil, SGHideArtistTabBar),
         ]),
-        SGNotedSection(@"Hide on the page", @[
-            SGHideRow(@"Songs you liked", nil, SGHideArtistLikedSongs),
-            SGHideRow(@"Popular", nil, SGHideArtistPopular),
-            SGHideRow(@"Artist pick", nil, SGHideArtistPick),
-            SGHideRow(@"Popular releases", nil, SGHideArtistReleases),
-            SGHideRow(@"Featuring", nil, SGHideArtistFeaturing),
-            SGHideRow(@"Music videos", nil, SGHideArtistVideos),
-            SGHideRow(@"About", nil, SGHideArtistAbout),
-            SGHideRow(@"Artist playlists", nil, SGHideArtistPlaylists),
-            SGHideRow(@"Fans also like", nil, SGHideArtistFansAlsoLike),
-            SGHideRow(@"Appears on", nil, SGHideArtistAppearsOn),
-            SGHideRow(@"Discovered on", nil, SGHideArtistDiscoveredOn),
-        ], @"Works only with Spotify in English."),
-        SGSection(@"Spotify's own", @[
-            SGFlagRow(@"Share button in the header", @"ios-creator-impl.share_in_action_row_enabled_artist"),
-            SGFlagRow(@"More options in the navigation bar", @"ios-creator-impl.context_menu_in_navigation_bar_enabled_artist"),
-            SGFlagRow(@"Top collaborators", @"ios-creator-impl.is_top_collaborators_enabled"),
-            SGFlagRow(@"Artist facts", @"ios-creator-impl.is_artist_facts_enabled"),
+        SGNotedSection(@"在页面隐藏", @[
+            SGHideRow(@"你点赞的歌曲", nil, SGHideArtistLikedSongs),
+            SGHideRow(@"热门", nil, SGHideArtistPopular),
+            SGHideRow(@"艺人精选", nil, SGHideArtistPick),
+            SGHideRow(@"热门发行", nil, SGHideArtistReleases),
+            SGHideRow(@"客串", nil, SGHideArtistFeaturing),
+            SGHideRow(@"音乐视频", nil, SGHideArtistVideos),
+            SGHideRow(@"关于", nil, SGHideArtistAbout),
+            SGHideRow(@"艺人歌单", nil, SGHideArtistPlaylists),
+            SGHideRow(@"粉丝也喜欢", nil, SGHideArtistFansAlsoLike),
+            SGHideRow(@"出现于", nil, SGHideArtistAppearsOn),
+            SGHideRow(@"被发现于", nil, SGHideArtistDiscoveredOn),
+        ], @"仅在 Spotify 为英文时有效。"),
+        SGSection(@"Spotify 自带", @[
+            SGFlagRow(@"头部分享按钮", @"ios-creator-impl.share_in_action_row_enabled_artist"),
+            SGFlagRow(@"导航栏中的更多选项", @"ios-creator-impl.context_menu_in_navigation_bar_enabled_artist"),
+            SGFlagRow(@"热门协作者", @"ios-creator-impl.is_top_collaborators_enabled"),
+            SGFlagRow(@"艺人资料", @"ios-creator-impl.is_artist_facts_enabled"),
         ]),
     ];
-    return [[SGModPage alloc] initWithTitle:@"Artist" intro:nil sections:sections footer:nil];
+    return [[SGModPage alloc] initWithTitle:@"艺人" intro:nil sections:sections footer:nil];
 }

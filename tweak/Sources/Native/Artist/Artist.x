@@ -229,17 +229,17 @@ static void hideTabBar(UIView *strip) {
 #pragma mark - sections
 
 static const struct { __unsafe_unretained NSString *title, *key; BOOL prefix; } sections[] = {
-    {@"Popular", SGHideArtistPopular, NO},
-    {@"Artist pick", SGHideArtistPick, NO},
-    {@"Popular releases", SGHideArtistReleases, NO},
+    {@"热门", SGHideArtistPopular, NO},
+    {@"艺人精选", SGHideArtistPick, NO},
+    {@"热门发行", SGHideArtistReleases, NO},
     {@"Featuring ", SGHideArtistFeaturing, YES},
-    {@"Music videos", SGHideArtistVideos, NO},
-    {@"Watch more from ", SGHideArtistVideos, YES},
-    {@"About", SGHideArtistAbout, NO},
-    {@"Artist playlists", SGHideArtistPlaylists, NO},
-    {@"Fans also like", SGHideArtistFansAlsoLike, NO},
-    {@"Appears on", SGHideArtistAppearsOn, NO},
-    {@"Discovered on", SGHideArtistDiscoveredOn, NO},
+    {@"音乐视频", SGHideArtistVideos, NO},
+    {@"观看更多来自", SGHideArtistVideos, YES},
+    {@"关于", SGHideArtistAbout, NO},
+    {@"艺人歌单", SGHideArtistPlaylists, NO},
+    {@"粉丝也喜欢", SGHideArtistFansAlsoLike, NO},
+    {@"出现于", SGHideArtistAppearsOn, NO},
+    {@"被发现于", SGHideArtistDiscoveredOn, NO},
 };
 
 static BOOL sectionHidden(NSString *title) {

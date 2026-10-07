@@ -33,7 +33,7 @@ static NSArray<SGUpdateChange *> *changesSinceThisBuild(void) {
 // Three lines and a count: enough to know whether to care, with the whole changelog a tap away.
 static NSString *noticeBody(NSString *version) {
     NSArray<SGUpdateChange *> *changes = changesSinceThisBuild();
-    NSMutableString *body = [NSMutableString stringWithFormat:@"This build is %s.", SG_VERSION];
+    NSMutableString *body = [NSMutableString stringWithFormat:@"此版本为 %s。", SG_VERSION];
     NSUInteger shown = MIN(changes.count, (NSUInteger)3);
     for (NSUInteger i = 0; i < shown; i++) [body appendFormat:@"\n\n• %@", changes[i].text];
     if (changes.count > shown) [body appendFormat:@"\n\nand %lu more in %@.", (unsigned long)(changes.count - shown), version];
@@ -67,17 +67,17 @@ static void offerWhenClear(NSInteger tries) {
     UIAlertController *sheet = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"%@ is out", version]
                                                                   message:noticeBody(version)
                                                            preferredStyle:UIAlertControllerStyleAlert];
-    [sheet addAction:[UIAlertAction actionWithTitle:@"What's new" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    [sheet addAction:[UIAlertAction actionWithTitle:@"更新内容" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         // The sheet is still going as this runs, so the page waits for the screen it is pushed onto.
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.35 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             SGShowPage(SGTopController(), SGUpdatePage());
         });
     }]];
     if (release.url.length)
-        [sheet addAction:[UIAlertAction actionWithTitle:@"Get it" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [sheet addAction:[UIAlertAction actionWithTitle:@"获取" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             SGOpenURL(release.url);
         }]];
-    [sheet addAction:[UIAlertAction actionWithTitle:@"Not now" style:UIAlertActionStyleCancel handler:nil]];
+    [sheet addAction:[UIAlertAction actionWithTitle:@"暂不" style:UIAlertActionStyleCancel handler:nil]];
     [top presentViewController:sheet animated:YES completion:nil];
     SGLog(@"update notice: offered %@ over %@", version, NSStringFromClass(top.class));
 }

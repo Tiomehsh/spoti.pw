@@ -65,18 +65,18 @@ NSString *SGSpicyLyricsSetKey(NSString *text) {
 }
 
 static NSString *refusal(NSString *code) {
-    if ([@[@"origin_not_allowed", @"origins_not_configured"] containsObject:code]) return @"Key rejected: allow No origin header";
-    if ([code isEqualToString:@"application_paused"]) return @"Key rejected: application paused";
-    if ([code isEqualToString:@"key_revoked"]) return @"Key rejected: revoked";
-    if ([@[@"key_not_found", @"key_malformed", @"malformed_authorization"] containsObject:code]) return @"Key rejected: not found";
+    if ([@[@"origin_not_allowed", @"origins_not_configured"] containsObject:code]) return @"密钥被拒:允许无 Origin 头";
+    if ([code isEqualToString:@"application_paused"]) return @"密钥被拒:应用已暂停";
+    if ([code isEqualToString:@"key_revoked"]) return @"密钥被拒:已吊销";
+    if ([@[@"key_not_found", @"key_malformed", @"malformed_authorization"] containsObject:code]) return @"密钥被拒:未找到";
     if ([@[@"application_suspended", @"user_suspended", @"key_disabled_by_admin", @"application_deleted"] containsObject:code]) {
-        return @"Key rejected: disabled";
+        return @"密钥被拒:已禁用";
     }
-    return @"Key rejected";
+    return @"密钥被拒绝";
 }
 
 NSString *SGSpicyLyricsProblem(void) {
-    if (!storedKey()) return @"Needs a key";
+    if (!storedKey()) return @"需要密钥";
     NSString *code = [NSUserDefaults.standardUserDefaults stringForKey:kRefusedKey];
     return code ? refusal(code) : nil;
 }
@@ -124,7 +124,7 @@ static NSArray<SGKaraokeWord *> *wordsFrom(NSArray *syllables, BOOL spelt) {
         NSDictionary *syllable = dictionaryIn(raw);
         if (!syllable) continue;
         BOOL runsOn = [syllable[@"IsPartOfWord"] boolValue];
-        NSString *text = spelt ? stringIn(syllable[@"TransliteratedText"]) ?: stringIn(syllable[@"Text"]) : stringIn(syllable[@"Text"]);
+        NSString *text = spelt ? stringIn(syllable[@"TransliteratedText"]) ?: stringIn(syllable[@"文本"]) : stringIn(syllable[@"文本"]);
         NSString *said = [text stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet];
         if (said.length) {
             SGKaraokeWord *word = [SGKaraokeWord new];
@@ -181,23 +181,23 @@ static NSArray<SGKaraokeLine *> *linesFromSyllables(NSArray *content) {
     NSMutableArray<SGKaraokeLine *> *lines = [NSMutableArray array];
     for (id raw in content ?: @[]) {
         NSDictionary *vocal = dictionaryIn(raw);
-        NSDictionary *lead = dictionaryIn(vocal[@"Lead"]);
-        SGKaraokeLine *line = lineFrom(wordsFrom(arrayIn(lead[@"Syllables"]), NO), lead[@"StartTime"], lead[@"EndTime"]);
+        NSDictionary *lead = dictionaryIn(vocal[@"主音"]);
+        SGKaraokeLine *line = lineFrom(wordsFrom(arrayIn(lead[@"音节"]), NO), lead[@"StartTime"], lead[@"EndTime"]);
         if (!line) continue;
         if ([vocal[@"OppositeAligned"] boolValue]) line.align = SGKaraokeAlignTrailing;
         // The page has one backing line under each line, so the API's runs of it read on as one.
         NSMutableArray *backingSyllables = [NSMutableArray array];
         NSMutableArray<NSString *> *backingSpelt = [NSMutableArray array];
         NSMutableArray<NSString *> *translations = [NSMutableArray arrayWithObject:translationIn(lead) ?: @""];
-        for (id rawGroup in arrayIn(vocal[@"Background"]) ?: @[]) {
+        for (id rawGroup in arrayIn(vocal[@"背景"]) ?: @[]) {
             NSDictionary *group = dictionaryIn(rawGroup);
-            [backingSyllables addObjectsFromArray:arrayIn(group[@"Syllables"]) ?: @[]];
+            [backingSyllables addObjectsFromArray:arrayIn(group[@"音节"]) ?: @[]];
             if (stringIn(group[@"TransliteratedText"]).length) [backingSpelt addObject:group[@"TransliteratedText"]];
             [translations addObject:translationIn(group) ?: @""];
         }
         line.backing = lineFrom(wordsFrom(backingSyllables, NO), nil, nil);
         line.backing.align = line.align;
-        line.pronunciation = spokenFrom(arrayIn(lead[@"Syllables"]), stringIn(lead[@"TransliteratedText"]), line);
+        line.pronunciation = spokenFrom(arrayIn(lead[@"音节"]), stringIn(lead[@"TransliteratedText"]), line);
         if (line.backing) line.backing.pronunciation = spokenFrom(backingSyllables, [backingSpelt componentsJoinedByString:@" "], line.backing);
         addTranslation(line, translations);
         [lines addObject:line];
@@ -211,7 +211,7 @@ static NSArray<SGKaraokeLine *> *linesFromLines(NSArray *content) {
     NSMutableArray<SGKaraokeLine *> *lines = [NSMutableArray array];
     for (id raw in content ?: @[]) {
         NSDictionary *vocal = dictionaryIn(raw);
-        NSString *text = [stringIn(vocal[@"Text"]) stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
+        NSString *text = [stringIn(vocal[@"文本"]) stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
         if (!text.length) continue;
         NSInteger start = msIn(vocal[@"StartTime"]), end = MAX(msIn(vocal[@"EndTime"]), start);
         SGKaraokeLine *line = [SGKaraokeEstimatedLines(@[@(start), @(end)], @[text, @""]) firstObject];
@@ -240,14 +240,14 @@ static SGLyricsCredit *creditFor(NSDictionary *body) {
     NSString *source = stringIn(body[@"source"]);
     if (![source isEqualToString:@"spicy_lyrics"]) {
         NSString *catalogue = catalogueName(source);
-        credit.text = catalogue ? [catalogue stringByAppendingString:@" via Spicy Lyrics"] : @"Spicy Lyrics, source unknown";
+        credit.text = catalogue ? [catalogue stringByAppendingString:@" via Spicy Lyrics"] : @"Spicy Lyrics,来源未知";
         return credit;
     }
     NSDictionary *made = dictionaryIn(body[@"UploadAttribution"]);
     NSMutableArray<NSString *> *parts = [NSMutableArray arrayWithObject:@"Spicy Lyrics"];
     NSMutableArray<NSString *> *titles = [NSMutableArray array];
     NSMutableArray<NSURL *> *links = [NSMutableArray array];
-    for (NSArray<NSString *> *person in @[@[@"Uploader", @"uploaded"], @[@"Maker", @"made"]]) {
+    for (NSArray<NSString *> *person in @[@[@"上传者", @"uploaded"], @[@"制作者", @"made"]]) {
         NSDictionary *who = dictionaryIn(made[person[0]]);
         NSString *name = [stringIn(who[@"username"]) stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet];
         if (!name.length) continue;
@@ -265,18 +265,18 @@ static SGLyricsCredit *creditFor(NSDictionary *body) {
 
 // Names the reply's shape and never its words.
 static NSString *shapeOf(NSDictionary *body) {
-    return [NSString stringWithFormat:@"Type=%@ source=%@ Content=%lu Lines=%lu", stringIn(body[@"Type"]) ?: @"-",
-            stringIn(body[@"source"]) ?: @"-", (unsigned long)arrayIn(body[@"Content"]).count,
-            (unsigned long)arrayIn(body[@"Lines"]).count];
+    return [NSString stringWithFormat:@"Type=%@ source=%@ Content=%lu Lines=%lu", stringIn(body[@"类型"]) ?: @"-",
+            stringIn(body[@"source"]) ?: @"-", (unsigned long)arrayIn(body[@"内容"]).count,
+            (unsigned long)arrayIn(body[@"行"]).count];
 }
 
 // Not static, so harness/spicylyrics can feed it the documented shapes.
 SGLyricsResult *SGSpicyLyricsResultFrom(NSDictionary *body);
 SGLyricsResult *SGSpicyLyricsResultFrom(NSDictionary *body) {
-    NSString *type = stringIn(body[@"Type"]);
-    BOOL wordTimed = [type isEqualToString:@"Syllable"];
-    NSArray<SGKaraokeLine *> *lines = wordTimed ? linesFromSyllables(arrayIn(body[@"Content"]))
-        : [type isEqualToString:@"Line"] ? linesFromLines(arrayIn(body[@"Content"])) : nil;
+    NSString *type = stringIn(body[@"类型"]);
+    BOOL wordTimed = [type isEqualToString:@"音节"];
+    NSArray<SGKaraokeLine *> *lines = wordTimed ? linesFromSyllables(arrayIn(body[@"内容"]))
+        : [type isEqualToString:@"行"] ? linesFromLines(arrayIn(body[@"内容"])) : nil;
     SGLyricsResult *result = [SGLyricsResult new];
     if (lines) {
         result.synced = YES;
@@ -287,13 +287,13 @@ SGLyricsResult *SGSpicyLyricsResultFrom(NSDictionary *body) {
         SGLyricsPageLines(lines, &starts, &texts);
         result.starts = starts;
         result.texts = texts;
-    } else if ([type isEqualToString:@"Static"]) {
+    } else if ([type isEqualToString:@"静态"]) {
         NSMutableArray<NSNumber *> *starts = [NSMutableArray array];
         NSMutableArray<NSString *> *texts = [NSMutableArray array];
         NSMutableArray<NSString *> *translations = [NSMutableArray array];
-        for (id raw in arrayIn(body[@"Lines"]) ?: @[]) {
+        for (id raw in arrayIn(body[@"行"]) ?: @[]) {
             NSDictionary *row = dictionaryIn(raw);
-            NSString *text = stringIn(row[@"Text"]);
+            NSString *text = stringIn(row[@"文本"]);
             if (!text) continue;
             [starts addObject:@0];
             [texts addObject:text.length ? text : @"♪"];
@@ -353,10 +353,10 @@ static void noteNotAsked(NSURL *url) {
 static SGLyricsResult *answer(NSString *trackID, NSString *key, id root, NSHTTPURLResponse *response) {
     NSInteger status = response.statusCode;
     if (response) holdOffAsTold(response);
-    NSDictionary *body = dictionaryIn(dictionaryIn(root)[@"Body"]);
+    NSDictionary *body = dictionaryIn(dictionaryIn(root)[@"正文"]);
     NSString *code = stringIn(body[@"error"]);
     if (status == 401 || status == 403) {
-        SGLog(@"spicy: the key was refused, %ld %@", (long)status, code ?: @"with no code");
+        SGLog(@"spicy: the key was refused, %ld %@", (long)status, code ?: @"无代码");
         if ([key isEqualToString:storedKey()]) noteRefused(code);
         return nil;
     }
@@ -373,9 +373,9 @@ static SGLyricsResult *answer(NSString *trackID, NSString *key, id root, NSHTTPU
     noteAccepted();
     SGLyricsResult *result = SGSpicyLyricsResultFrom(body);
     keep(trackID, result);
-    SGLog(@"spicy: %@ came back as %@, %@", trackID, shapeOf(body), !result ? @"nothing the page could show"
+    SGLog(@"spicy: %@ came back as %@, %@", trackID, shapeOf(body), !result ? @"页面无可显示内容"
           : [NSString stringWithFormat:@"%lu %@ lines", (unsigned long)result.texts.count,
-             result.wordTimed ? @"word timed" : result.synced ? @"line timed" : @"untimed"]);
+             result.wordTimed ? @"逐字计时" : result.synced ? @"行计时" : @"untimed"]);
     return result;
 }
 
@@ -407,8 +407,8 @@ SGLyricsAsk SGSpicyLyricsAsk = ^(SGLyricsQuery *query, void (^done)(SGLyricsResu
         return;
     }
     NSDictionary<NSString *, NSString *> *headers = @{
-        @"Authorization": [@"Bearer " stringByAppendingString:key],
-        @"Accept": @"application/json",
+        @"授权": [@"Bearer " stringByAppendingString:key],
+        @"接受": @"application/json",
         @"User-Agent": @"spoti.pw " @SG_VERSION @" (https://github.com/skopevoj/spoti.pw)",
     };
     SGLyricsGetJSONReply(url, headers, ^(id root, NSHTTPURLResponse *response) {

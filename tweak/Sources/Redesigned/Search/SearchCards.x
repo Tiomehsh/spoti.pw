@@ -174,7 +174,7 @@ static void style(UIView *box) {
     UIView *content = contentOf(box);
     CAShapeLayer *fill = fillLayerOf(box);
     if (!content || !fill) {
-        logOnce([NSString stringWithFormat:@"a category card without its %@, left as Spotify's", content ? @"fill layer" : @"content view"]);
+        logOnce([NSString stringWithFormat:@"a category card without its %@, left as Spotify's", content ? @"填充层" : @"内容视图"]);
         return;
     }
     // A pressed card's fill is Spotify's pressed shade; the colour is taken while it is not pressed.
@@ -202,7 +202,7 @@ static void style(UIView *box) {
     }
     moveTitleIn(content);
     roundCover(content);
-    logOnce(parts.glass ? @"category cards on tinted glass" : @"category cards on their colour, no glass");
+    logOnce(parts.glass ? @"分类卡片用着色玻璃" : @"分类卡片用其颜色,无玻璃");
 }
 
 %hook _TtCE16Encore_LayoutKitO16EncoreFoundation6Encore3Box

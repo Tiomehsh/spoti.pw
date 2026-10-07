@@ -154,7 +154,7 @@ static void requestFromSpotify(NSString *trackID, BOOL retry) {
     [headers enumerateKeysAndObjectsUsingBlock:^(NSString *name, NSString *value, BOOL *stop) {
         [request setValue:value forHTTPHeaderField:name];
     }];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"接受"];
     // The mod's own, so LyricsHook's request hook does not send it to the donor.
     [NSURLProtocol setProperty:@YES forKey:SGLyricsOwnRequestKey inRequest:request];
     [[NSURLSession.sharedSession dataTaskWithRequest:request completionHandler:^(NSData *body, NSURLResponse *response, NSError *error) {
@@ -162,7 +162,7 @@ static void requestFromSpotify(NSString *trackID, BOOL retry) {
         NSInteger status = [response isKindOfClass:NSHTTPURLResponse.class] ? ((NSHTTPURLResponse *)response).statusCode : 0;
         SGLog(@"karaoke: fetched lyrics for %@: status %ld, %lu lines (%@), error %@", trackID,
               (long)status, (unsigned long)lines.count,
-              SGKaraokeLinesTiming(lines) == SGKaraokeTimingNone ? @"untimed" : @"line timed", error);
+              SGKaraokeLinesTiming(lines) == SGKaraokeTimingNone ? @"untimed" : @"行计时", error);
         // A refused authorization is lost too: the captured one may have expired, and Spotify's next
         // spclient request brings a fresh one.
         BOOL lost = SGLyricsReplyFailed(response, error) || status == 401 || status == 403;
@@ -359,7 +359,7 @@ static SGKaraokeTrackWatcher *sg_trackWatcher;
         NSString *trackID = idOf(state.track);
         if (trackID) prefetch(state.track, trackID, state);
     }];
-    SGLog(@"karaoke: on");
+    SGLog(@"卡拉OK:开");
     SGRequireClasses(@[
         @"SPTEsperantoPlayer", @"SPTPlayerState",
         @"SPTDataLoaderService", @"_TtC26Connectivity_HttpClientKit20HttpClientURLSession",

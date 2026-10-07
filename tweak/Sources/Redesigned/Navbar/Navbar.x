@@ -165,7 +165,7 @@ void SGRTabPicked(UIView *item) {
     NSString *via = nil;
     SGLinkRoute route = SGSpotifyURIRoute(url, &via);
     SGLog(@"navbar: open %@ -> %@", url.absoluteString ?: self.uri,
-          route == SGLinkRouteOpens ? via : route == SGLinkRouteNone ? @"no handler" : @"unknown");
+          route == SGLinkRouteOpens ? via : route == SGLinkRouteNone ? @"无处理器" : @"unknown");
     if (!SGOpenSpotifyURI(url)) SGLog(@"navbar: cannot open %@, dispatcher %@", self.uri, SGLinkDispatcher());
 }
 

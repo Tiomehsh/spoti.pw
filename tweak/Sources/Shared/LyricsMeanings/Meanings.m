@@ -19,9 +19,9 @@ SGLyricsMeaningsLevel SGLyricsMeaningsShown(void) {
 }
 
 SGModRow *SGLyricsMeaningsRow(void) {
-    SGModRow *row = SGChoiceRow(@"Line meanings", nil, SGKeyLyricsMeanings,
-                                @[@"Off", @"From the artist", @"Artist and editors", @"Everyone"], SGLyricsMeaningsOff);
-    row.choiceFooter = @"Explanations from Genius. Tap the bubble after a line, or hold the line.";
+    SGModRow *row = SGChoiceRow(@"歌词含义", nil, SGKeyLyricsMeanings,
+                                @[@"Off", @"来自艺人", @"艺人与编辑", @"所有人"], SGLyricsMeaningsOff);
+    row.choiceFooter = @"来自 Genius 的解析。点按行后气泡,或长按该行。";
     return row;
 }
 
@@ -95,7 +95,7 @@ static NSArray<NSString *> *fragmentLines(NSString *fragment) {
 
 static NSDictionary<NSString *, NSString *> *headers(void) {
     return @{@"User-Agent": @"Mozilla/5.0 (iPhone; CPU iPhone OS 26_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148",
-             @"Accept": @"application/json"};
+             @"接受": @"application/json"};
 }
 
 static void getJSON(NSString *base, NSDictionary<NSString *, NSString *> *query, void (^done)(NSDictionary *response)) {

@@ -816,7 +816,7 @@ static const NSUInteger kLinesPerFrame = 4;
         _bubble.alpha = kBubbleAlpha;
         _bubble.frame = CGRectMake(x, CGRectGetMidY(word) - kBubbleSide / 2, kBubbleSide, kBubbleSide);
         _bubble.isAccessibilityElement = YES;
-        _bubble.accessibilityLabel = @"Meaning from the artist";
+        _bubble.accessibilityLabel = @"来自艺人的含义";
         [self addSubview:_bubble];
         return;
     }
@@ -1482,19 +1482,19 @@ typedef struct {
         _extras.overrideUserInterfaceStyle = UIUserInterfaceStyleDark;
         _extras.showsMenuAsPrimaryAction = YES;
         _extras.preferredMenuElementOrder = UIContextMenuConfigurationElementOrderFixed;
-        _extras.accessibilityLabel = @"Pronunciation and translation";
+        _extras.accessibilityLabel = @"发音与翻译";
         [self addSubview:_extras];
     }
     NSMutableArray<UIMenuElement *> *items = [NSMutableArray array];
     if (_hasSpoken) {
         BOOL on = SGFlag(SGRKeyLyricsPronunciation, NO);
-        [items addObject:[UIAction actionWithTitle:on ? @"Hide Pronunciation" : @"Show Pronunciation"
+        [items addObject:[UIAction actionWithTitle:on ? @"隐藏发音" : @"显示发音"
                                              image:[UIImage systemImageNamed:@"character.phonetic"] identifier:nil
                                            handler:^(UIAction *action) { SGRSetLyricsTextShown(SGRLyricsTextPronunciation, !on); }]];
     }
     if (_hasTranslation) {
         BOOL on = SGFlag(SGRKeyLyricsTranslation, NO);
-        [items addObject:[UIAction actionWithTitle:on ? @"Hide Translation" : @"Show Translation"
+        [items addObject:[UIAction actionWithTitle:on ? @"隐藏翻译" : @"显示翻译"
                                              image:[UIImage systemImageNamed:@"character.bubble"] identifier:nil
                                            handler:^(UIAction *action) { SGRSetLyricsTextShown(SGRLyricsTextTranslation, !on); }]];
     }
@@ -1708,7 +1708,7 @@ typedef struct {
 - (void)tick {
     NSString *track = SGKaraokePlayingTrack();
     if (!(track == _track || [track isEqualToString:_track])) {
-        SGLog(@"karaoke: page shows track %@, lyrics %@", track, SGKaraokeLinesForTrack(track) ? @"captured" : @"not captured yet");
+        SGLog(@"karaoke: page shows track %@, lyrics %@", track, SGKaraokeLinesForTrack(track) ? @"captured" : @"尚未捕获");
         _track = track;
         _lines = nil;
         _builtWidth = 0;

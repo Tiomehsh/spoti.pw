@@ -192,7 +192,7 @@ static __weak SGRMiniPlayer *sg_miniPlayer;
 - (void)showPaused:(BOOL)paused {
     UIImage *image = [UIImage systemImageNamed:paused ? @"play.fill" : @"pause.fill"];
     if (![[_play imageForState:UIControlStateNormal] isEqual:image]) [_play setImage:image forState:UIControlStateNormal];
-    _play.accessibilityLabel = paused ? @"Play" : @"Pause";
+    _play.accessibilityLabel = paused ? @"播放" : @"暂停";
 }
 
 #pragma mark - touches

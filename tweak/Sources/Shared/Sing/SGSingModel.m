@@ -60,7 +60,7 @@ static NSURL *singFolder(void) {
     return folder;
 }
 static NSURL *installedModel(void) { return [singFolder() URLByAppendingPathComponent:@"separator.mlmodelc" isDirectory:YES]; }
-static NSURL *staging(void) { return [singFolder() URLByAppendingPathComponent:@"Download" isDirectory:YES]; }
+static NSURL *staging(void) { return [singFolder() URLByAppendingPathComponent:@"下载" isDirectory:YES]; }
 static NSURL *stagedModel(void) { return [staging() URLByAppendingPathComponent:@"separator.mlmodelc" isDirectory:YES]; }
 static NSURL *stagedFile(int i) { return [stagedModel() URLByAppendingPathComponent:pathOf(i)]; }
 // Where a file waits for its hash, and where a stopped download of it keeps what it needs to resume.
@@ -226,7 +226,7 @@ static void installIfComplete(void) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (epoch != sg_epoch || !sg_want) return;
             if (!moved) { fail([NSString stringWithFormat:@"The voice model could not be put in place: %@", error.localizedDescription]); return; }
-            SGLog(@"Sing voice model installed");
+            SGLog(@"Sing 人声模型已安装");
             sg_want = NO;
             [NSUserDefaults.standardUserDefaults removeObjectForKey:SGKeySingModelDownload];
             sg_installed = YES;
@@ -300,7 +300,7 @@ static int indexOf(NSURLSessionTask *task) {
     if (i < 0 || !sg_want || sg_done[i] || sg_checking[i]) return;
     NSInteger status = [task.response isKindOfClass:NSHTTPURLResponse.class] ? ((NSHTTPURLResponse *)task.response).statusCode : 0;
     if (status != 200 && status != 206) {
-        sg_rejected[i] = [NSString stringWithFormat:@"The voice model's host answered %ld.", (long)status];
+        sg_rejected[i] = [NSString stringWithFormat:@"人声模型服务器返回 %ld。", (long)status];
         return;
     }
     NSFileManager *files = NSFileManager.defaultManager;
@@ -428,7 +428,7 @@ void SGSingModelDownload(BOOL metered) {
         return;
     }
     SGLog(@"Sing voice model download starting, %lld of %lld bytes here, %@", SGSingModelReceived(), SGSingModelSize(),
-          metered ? @"on any network" : @"off metered networks");
+          metered ? @"任意网络" : @"关闭按流量计费的网络");
     sg_want = YES;
     sg_metered = metered;
     sg_failure = nil;
@@ -449,7 +449,7 @@ void SGSingModelCancel(void) {
 
 void SGSingModelRemove(void) {
     load();
-    SGLog(@"Sing voice model removed");
+    SGLog(@"Sing 人声模型已移除");
     sg_epoch++;
     stopTasks(NO);
     sg_installed = NO;

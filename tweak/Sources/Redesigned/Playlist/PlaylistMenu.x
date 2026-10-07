@@ -116,7 +116,7 @@ static void pillsIn(UIView *toolbar, UIView **sort, UIView **mix) {
     if (!logged && seen.count) {
         logged = YES;
         SGLog(@"redesign playlist: the curation pills draw %@; sort %@", [seen componentsJoinedByString:@", "],
-              foundSort ? @"found" : @"NOT FOUND");
+              foundSort ? @"found" : @"未找到");
     }
     *sort = foundSort;
     *mix = foundMix;
@@ -143,7 +143,7 @@ void SGRPlaylistTakeCuration(UIView *cell) {
     if (!logged) {
         logged = YES;
         SGLog(@"redesign playlist: the curation row is the page's, sort %@, mix %@",
-              sort ? pillWord(sort) : @"not found", mix ? pillWord(mix) : @"not found");
+              sort ? pillWord(sort) : @"未找到", mix ? pillWord(mix) : @"未找到");
     }
 }
 

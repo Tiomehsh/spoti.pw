@@ -101,7 +101,7 @@ BOOL SGCertificateOfferShown(void) {
 SGModRow *SGCertificateRow(void) {
     if (!signedFree()) return nil;
     NSDate *expires = SGCertificateExpiry();
-    NSString *title = expires ? [NSString stringWithFormat:@"Signed until %@", dayOf(expires)] : @"Signed with a free Apple ID";
+    NSString *title = expires ? [NSString stringWithFormat:@"Signed until %@", dayOf(expires)] : @"已用免费 Apple ID 签名";
     return SGWithSymbol(SGLinkRow(title, @"A free Apple ID signs for 7 days, a certificate for a year", kCertificateURL), @"signature");
 }
 
@@ -183,7 +183,7 @@ void SGShowCertificateSheet(NSDictionary *offer, UIImage *logo) {
     sheet.note = textIn(offer, @"note");
     sheet.actionTitle = textIn(offer, @"action");
     sheet.actionSymbol = @"checkmark.seal.fill";
-    sheet.dismissTitle = textIn(offer, @"dismiss") ?: @"Not now";
+    sheet.dismissTitle = textIn(offer, @"dismiss") ?: @"暂不";
     sheet.action = ^{
         SGLog(@"certificate: sheet opened the link");
         SGOpenURL(url);
@@ -204,7 +204,7 @@ static void offerWhenClear(NSInteger tries) {
     fetchOffer(^(NSDictionary *offer, UIImage *logo) {
         UIViewController *top = SGTopController();
         if (!offer || screenBusy(top) || SGUpdateNoticeShown() || SGDonateShown()) {
-            SGLog(@"certificate: sheet due, not shown (%@)", offer ? @"screen busy" : @"no offer from spoti.pw");
+            SGLog(@"certificate: sheet due, not shown (%@)", offer ? @"屏幕忙" : @"spoti.pw 无提供");
             return;
         }
         [NSUserDefaults.standardUserDefaults setDouble:NSDate.date.timeIntervalSince1970 forKey:kShownKey];
@@ -216,7 +216,7 @@ static void offerWhenClear(NSInteger tries) {
 
 void SGWatchForCertificate(void) {
     NSString *kind = SGCertificateKind();
-    SGLog(@"certificate: %@%@", kind ?: @"unreadable profile",
+    SGLog(@"certificate: %@%@", kind ?: @"无法读取的描述文件",
           [kind isEqualToString:@"free"] ? [NSString stringWithFormat:@", runs out %@", SGCertificateExpiry()] : @"");
     if (!signedFree()) return;
     profilesSeen();

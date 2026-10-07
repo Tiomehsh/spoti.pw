@@ -7,9 +7,9 @@ static const CGFloat kSide = 24, kTop = 28, kGap = 12;
 
 static NSString *authorName(SGLyricsMeaningAuthor author) {
     switch (author) {
-        case SGLyricsMeaningByArtist: return @"From the artist";
-        case SGLyricsMeaningByEditors: return @"Genius editors";
-        case SGLyricsMeaningByCommunity: return @"Genius community";
+        case SGLyricsMeaningByArtist: return @"来自艺人";
+        case SGLyricsMeaningByEditors: return @"Genius 编辑";
+        case SGLyricsMeaningByCommunity: return @"Genius 社区";
     }
     return nil;
 }
@@ -92,8 +92,8 @@ static NSString *authorSymbol(SGLyricsMeaningAuthor author) {
     _body = [self labelWithFont:[UIFont preferredFontForTextStyle:UIFontTextStyleBody] color:SGRPrimary()];
     _count = [self labelWithFont:[UIFont systemFontOfSize:13 weight:UIFontWeightRegular] color:SGRTertiary()];
     _count.numberOfLines = 1;
-    _next = [self buttonWithTitle:@"Next" action:@selector(showNext)];
-    _open = [self buttonWithTitle:@"View on Genius" action:@selector(openGenius)];
+    _next = [self buttonWithTitle:@"下一首" action:@selector(showNext)];
+    _open = [self buttonWithTitle:@"在 Genius 查看" action:@selector(openGenius)];
     [self show];
 }
 

@@ -238,8 +238,8 @@ static void layoutRoot(UIView *page) {
     if (!logged && header.window && face) {
         logged = YES;
         SGLog(@"redesign library: header %@, %lu controls at the trailing edge, avatar %@, chips %@",
-              NSStringFromCGRect(header.frame), (unsigned long)trailing.count, face ? @"found" : @"not found",
-              childNamed(header, @"YourLibraryHeaderContentFiltersView") ? @"Spotify's" : @"not found");
+              NSStringFromCGRect(header.frame), (unsigned long)trailing.count, face ? @"found" : @"未找到",
+              childNamed(header, @"YourLibraryHeaderContentFiltersView") ? @"Spotify's" : @"未找到");
     }
 }
 
@@ -258,8 +258,8 @@ static void layoutFolder(UIView *page) {
     if (!logged && header.window && trailing) {
         logged = YES;
         SGLog(@"redesign library: folder header %@, back %@, %lu controls at the trailing edge, chips %@",
-              NSStringFromCGRect(header.frame), back ? @"found" : @"not found", (unsigned long)trailing,
-              childNamed(header, @"YourLibraryHeaderContentFiltersView") ? @"Spotify's" : @"not found");
+              NSStringFromCGRect(header.frame), back ? @"found" : @"未找到", (unsigned long)trailing,
+              childNamed(header, @"YourLibraryHeaderContentFiltersView") ? @"Spotify's" : @"未找到");
     }
 }
 

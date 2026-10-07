@@ -428,7 +428,7 @@ static void syncBar(UIView *stockBar) {
         for (UIView *source in sources) [items addObject:[[UITabBarItem alloc] initWithTitle:hideLabels ? nil : labelIn(source).text image:nil tag:items.count]];
         bar.sources = sources;
         [bar setItems:items animated:NO];
-        NSMutableString *out = [NSMutableString stringWithString:@"tab bar icons"];
+        NSMutableString *out = [NSMutableString stringWithString:@"标签栏图标"];
         for (UIView *source in sources) {
             UIView *live = iconIn(source);
             id icon = live ? encoreIconOf(live) : nil;
@@ -568,7 +568,7 @@ static void nameScrollView(void) {
     }
     for (UIView *v = hit; v && v != self; v = v.superview) {
         if (v == bar) return hit == bar ? nil : hit;
-        if ([NSStringFromClass(v.class) containsString:@"Accessory"]) return hit;
+        if ([NSStringFromClass(v.class) containsString:@"配件"]) return hit;
     }
     return nil;
 }
@@ -846,7 +846,7 @@ static void considerScrollView(UIScrollView *scroll) {
     UIScrollView *current = sg_pageScroll;
     if (current == scroll) return;
     if (current.window && [current isDescendantOfView:scroll]) return;
-    takePageScroll(scroll, @"came on screen");
+    takePageScroll(scroll, @"出现在屏幕上");
 }
 
 static void searchPageScroll(void) {

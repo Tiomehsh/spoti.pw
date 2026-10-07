@@ -109,7 +109,7 @@ static __weak UIView *sg_titleElement;      // the arranged element view holding
     _face.userInteractionEnabled = NO;
     [self addSubview:_face];
     self.isAccessibilityElement = YES;
-    self.accessibilityLabel = @"Hide lyrics";
+    self.accessibilityLabel = @"隐藏歌词";
     self.accessibilityTraits = UIAccessibilityTraitButton;
     [self addTarget:self action:@selector(tapped) forControlEvents:UIControlEventTouchUpInside];
     return self;
@@ -175,7 +175,7 @@ static __weak UIView *sg_titleElement;      // the arranged element view holding
     // What the lines leave when a song has none, which only Sing opens them for. A sibling of the lines'
     // view, so it goes whenever they have something to show (SGRKaraokeView's syncSiblings).
     _empty = [UILabel new];
-    _empty.text = @"Lyrics aren't available for this song.";
+    _empty.text = @"此歌曲暂无歌词。";
     _empty.textColor = SGRSecondary();
     _empty.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     _empty.adjustsFontForContentSizeCategory = YES;

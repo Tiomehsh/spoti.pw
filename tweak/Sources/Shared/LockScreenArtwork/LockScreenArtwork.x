@@ -129,14 +129,14 @@ static void askCanvaz(NSString *uri, void (^done)(SGCanvas *canvas, NSString *no
     NSString *authorization = SGKaraokeSpotifyAuthorization();
     NSData *body = SGCanvazRequestBody(uri);
     if (!authorization || !body) {
-        done(nil, @"no token for canvaz yet");
+        done(nil, @"尚无 canvaz 令牌");
         return;
     }
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:kCanvazAddress]];
     request.HTTPMethod = @"POST";
     request.HTTPBody = body;
     request.allowsConstrainedNetworkAccess = NO;
-    [request setValue:authorization forHTTPHeaderField:@"Authorization"];
+    [request setValue:authorization forHTTPHeaderField:@"授权"];
     [request setValue:@"application/x-protobuf" forHTTPHeaderField:@"Content-Type"];
     [[NSURLSession.sharedSession dataTaskWithRequest:request completionHandler:^(NSData *answer, NSURLResponse *response, NSError *error) {
         SGCanvas *canvas = SGCanvazFromBody(answer);
@@ -149,9 +149,9 @@ static void askCanvaz(NSString *uri, void (^done)(SGCanvas *canvas, NSString *no
 void SGArtworkAsk(NSString *source, SPTPlayerTrack *track, SGCanvas *fromMetadata, BOOL tall, void (^done)(SGCanvas *canvas, NSString *note)) {
     if ([source isEqualToString:SGArtworkSourceSpotify]) {
         NSString *uri = SGURIString(track.URI);
-        if (fromMetadata) done(fromMetadata, @"track metadata");
+        if (fromMetadata) done(fromMetadata, @"曲目元数据");
         else if (uri) askCanvaz(uri, done);
-        else done(nil, @"no track");
+        else done(nil, @"无曲目");
         return;
     }
     NSDictionary *metadata = [track respondsToSelector:@selector(metadata)] ? track.metadata : nil;
@@ -160,7 +160,7 @@ void SGArtworkAsk(NSString *source, SPTPlayerTrack *track, SGCanvas *fromMetadat
 
 static void walk(NSString *uri, SPTPlayerTrack *track, SGCanvas *fromMetadata, NSArray<NSString *> *order, NSUInteger at) {
     if (at >= order.count) {
-        SGLog(@"lock artwork: no clip for %@ from %@", uri, order.count ? [order componentsJoinedByString:@", "] : @"no source");
+        SGLog(@"lock artwork: no clip for %@ from %@", uri, order.count ? [order componentsJoinedByString:@", "] : @"无来源");
         return;
     }
     SGArtworkAsk(order[at], track, fromMetadata, sg_aspect < 0.9, ^(SGCanvas *canvas, NSString *note) {
@@ -194,7 +194,7 @@ static void resolve(SPTPlayerTrack *track) {
                 sg_artwork = nil;
                 sg_key = nil;
             }
-            SGLog(@"lock artwork: switched off");
+            SGLog(@"锁屏封面:已关闭");
             resend();
         }
         return;
@@ -258,7 +258,7 @@ static SGArtworkWatcher *sg_watcher;
 
 %ctor {
     if (!SGAnimatedArtworkAvailable()) {
-        SGLog(@"lock artwork: off, animated artwork needs iOS 26");
+        SGLog(@"锁屏封面:关,动态封面需 iOS 26");
         return;
     }
     sg_lock = [NSObject new];
@@ -266,5 +266,5 @@ static SGArtworkWatcher *sg_watcher;
     SGAddPlayerStateObserver(sg_watcher);
     %init;
     SGRequireClasses(@[@"MPNowPlayingInfoCenter"]);
-    SGLog(@"lock artwork: on");
+    SGLog(@"锁屏封面:开");
 }

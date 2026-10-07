@@ -232,7 +232,7 @@ static BOOL sameImages(NSArray<UIImage *> *a, NSArray<UIImage *> *b) {
         if (!*logged) {
             *logged = YES;
             SGLog(@"redesign header: %lu face(s) before \"%@\", %@", (unsigned long)images.count, _creator.text,
-                  _creatorDrawn ? @"landed after the line was drawn, faded in" : @"there on the first pass");
+                  _creatorDrawn ? @"在行绘制后到达,淡入" : @"首次通过即在");
         }
     }
     [self setNeedsLayout];

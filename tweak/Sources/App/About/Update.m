@@ -88,7 +88,7 @@ static NSString *takeCommitURL(NSString **line) {
 // heading release-please leads with, blank lines -- is dropped, the version being known already.
 static NSArray<SGUpdateChange *> *changesIn(NSString *body) {
     NSMutableArray<SGUpdateChange *> *changes = [NSMutableArray array];
-    NSString *kind = @"Changes";
+    NSString *kind = @"更改";
     SGUpdateChange *open = nil;
     for (NSString *raw in [body componentsSeparatedByCharactersInSet:NSCharacterSet.newlineCharacterSet]) {
         NSString *line = [raw stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet];
@@ -159,8 +159,8 @@ NSString *SGUpdateStatus(void) {
     if (sg_failure) return sg_failure;
     NSString *latest = SGUpdateVersion();
     if (latest) return [latest stringByAppendingString:@" is out"];
-    if ([NSUserDefaults.standardUserDefaults doubleForKey:kChecked] > 0) return @"up to date";
-    return @"not checked";
+    if ([NSUserDefaults.standardUserDefaults doubleForKey:kChecked] > 0) return @"已是最新";
+    return @"未检查";
 }
 
 #pragma mark - the check
@@ -200,7 +200,7 @@ static void ask(NSString *url, NSData *body, void (^done)(NSArray<NSDictionary *
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]
                                                            cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
                                                        timeoutInterval:10];
-    [request setValue:@"application/vnd.github+json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/vnd.github+json" forHTTPHeaderField:@"接受"];
     if (body) {
         request.HTTPMethod = @"POST";
         request.HTTPBody = body;
@@ -231,9 +231,9 @@ void SGCheckForUpdate(BOOL force) {
             if (!releases) {
                 // Unauthenticated GitHub allows sixty requests an hour per address; a phone behind a
                 // carrier NAT can be told to wait, and that is worth reading apart from a dead network.
-                sg_failure = status == 403 || status == 429 ? @"asked too often" : @"check failed";
+                sg_failure = status == 403 || status == 429 ? @"请求过于频繁" : @"检查失败";
                 SGLog(@"update check failed: HTTP %ld, %@", (long)status,
-                      error.localizedDescription ?: @"no release in the reply");
+                      error.localizedDescription ?: @"回复中无版本");
             } else {
                 [store setObject:releases forKey:kReleases];
                 [store setDouble:NSDate.date.timeIntervalSince1970 forKey:kChecked];
@@ -244,7 +244,7 @@ void SGCheckForUpdate(BOOL force) {
     };
     NSData *body = SGUsageBody();
     if (body) SGUsageNoteAsked();
-    SGLog(@"update check: asking spoti.pw %@", body ? @"with the usage body" : @"without the usage body");
+    SGLog(@"update check: asking spoti.pw %@", body ? @"带使用情况数据" : @"不带使用情况数据");
     ask(SGUpdateURL, body, ^(NSArray<NSDictionary *> *releases, NSInteger status, NSError *error) {
         if (releases) return finish(releases, status, error);
         SGLog(@"update check: spoti.pw answered HTTP %ld, asking GitHub", (long)status);

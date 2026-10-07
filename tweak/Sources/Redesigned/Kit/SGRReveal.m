@@ -77,7 +77,7 @@ static NSString *arrivalTimes(SGRRevealState *state) {
         NSNumber *at = state.arrivals[part];
         if (at) [times addObject:[NSString stringWithFormat:@"%@ %.2f", partName(part.unsignedIntegerValue), MAX(0, at.doubleValue - state.raised)]];
     }
-    return times.count ? [times componentsJoinedByString:@", "] : @"no part in";
+    return times.count ? [times componentsJoinedByString:@", "] : @"未参与";
 }
 
 // The page by what the log can tell apart: a view controller's view by the controller.
@@ -126,7 +126,7 @@ static void lift(UIView *page, SGRRevealState *state, NSString *why) {
 
 static void liftIfComplete(UIView *page, SGRRevealState *state) {
     if (state.lifted || !state.curtain || !state.awaited) return;
-    if ((state.arrived & state.awaited) == state.awaited) lift(page, state, @"everything in");
+    if ((state.arrived & state.awaited) == state.awaited) lift(page, state, @"全部包含");
 }
 
 void SGRRevealHold(UIView *page, SGRRevealPart parts) {
@@ -150,12 +150,12 @@ void SGRRevealHold(UIView *page, SGRRevealPart parts) {
         __weak UIView *weakPage = page;
         __weak SGRRevealState *weakState = state;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kClaim * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            if (weakPage && weakState && !weakState.awaited) lift(weakPage, weakState, @"claimed by nothing");
+            if (weakPage && weakState && !weakState.awaited) lift(weakPage, weakState, @"未被认领");
         });
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(SGRRevealCap * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             SGRRevealState *late = weakState;
             if (!weakPage || !late || late.lifted) return;
-            lift(weakPage, late, [@"still without " stringByAppendingString:partNames(late.awaited & ~late.arrived)]);
+            lift(weakPage, late, [@"仍无" stringByAppendingString:partNames(late.awaited & ~late.arrived)]);
         });
     }
     if (curtain.superview != page) [page addSubview:curtain];

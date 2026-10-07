@@ -65,7 +65,7 @@ static SGRArtworkField *fieldIn(UIView *plane) {
     // animation, where a crossfade would only add work.
     showArtwork(field, NO);
     SGLog(@"redesign player: field in the background plane %.0fx%.0f, motion %ld, artwork %@", plane.bounds.size.width, plane.bounds.size.height,
-          (long)field.motion, SGRNowPlayingArtwork(NULL, NULL) ? @"ready" : @"not read yet");
+          (long)field.motion, SGRNowPlayingArtwork(NULL, NULL) ? @"ready" : @"尚未读取");
     return field;
 }
 

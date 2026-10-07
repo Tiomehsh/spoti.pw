@@ -144,7 +144,7 @@ static void checkSleepTimer(id<SPTPlayer> player, SPTPlayerState *state, NSStrin
     if (!up) return;
     clearSleepTimer();
     if (!state.isPaused) [player pause:nil];
-    SGLog(@"live activity: sleep timer up, paused");
+    SGLog(@"实时活动:睡眠定时结束,已暂停");
 }
 
 static void tick(void) API_AVAILABLE(ios(17.0)) {
@@ -263,7 +263,7 @@ void SGSetLiveActivityEnabled(BOOL on) {
         clearSleepTimer();
         if (!on) {
             [SGLiveActivityBridge end];
-            SGLog(@"live activity: off");
+            SGLog(@"实时活动:关");
             return;
         }
         static dispatch_once_t observing;
@@ -280,7 +280,7 @@ void SGSetLiveActivityEnabled(BOOL on) {
             }];
         });
         startTimer(kTick);
-        SGLog(@"live activity: on");
+        SGLog(@"实时活动:开");
     }
 }
 

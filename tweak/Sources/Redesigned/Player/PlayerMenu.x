@@ -566,7 +566,7 @@ static void settle(SGRPlayerMenuTakeover *t) {
             settle(strong);
             return;
         }
-        finish(strong, @"the row left it up", nil);
+        finish(strong, @"行保持其开启", nil);
     });
 }
 
@@ -638,14 +638,14 @@ static void menuClosed(SGRPlayerMenuTakeover *t) {
     __weak SGRPlayerMenuTakeover *weak = t;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kPickGrace * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         SGRPlayerMenuTakeover *strong = weak;
-        if (strong && !strong.pick) finish(strong, @"the menu closed with nothing picked", nil);
+        if (strong && !strong.pick) finish(strong, @"菜单关闭,未选择任何项", nil);
     });
 }
 
 static void openSpeedPitch(SGRPlayerMenuTakeover *t) {
     UIView *button = t.button;
     UIViewController *player = t.player;
-    finish(t, @"Speed and pitch opens its panel", ^{
+    finish(t, @"速度与音高打开其面板", ^{
         if (!player || !button.window || player.presentedViewController) return;
         SGRSpeedPitchPanel *panel = [SGRSpeedPitchPanel new];
         panel.modalPresentationStyle = UIModalPresentationPopover;
@@ -681,7 +681,7 @@ static UIAction *actionFor(SGRPlayerMenuTakeover *t, SGRPlayerMenuSpotifyRow *ro
 
 static UIAction *speedAndPitchAction(SGRPlayerMenuTakeover *t) {
     __weak SGRPlayerMenuTakeover *weak = t;
-    UIAction *action = [UIAction actionWithTitle:@"Speed and pitch" image:symbol(@"slider.horizontal.3") identifier:nil handler:^(UIAction *sender) {
+    UIAction *action = [UIAction actionWithTitle:@"速度与音高" image:symbol(@"slider.horizontal.3") identifier:nil handler:^(UIAction *sender) {
         pick(weak, ^(SGRPlayerMenuTakeover *strong) { openSpeedPitch(strong); });
     }];
     action.subtitle = SGSpeedPitchSummary();
@@ -718,7 +718,7 @@ static UIMenu *menuFor(SGRPlayerMenuTakeover *t) {
     if (more.count == 1) {
         [feedback addObject:more.firstObject];
     } else if (more.count) {
-        [feedback addObject:[UIMenu menuWithTitle:@"More" image:symbol(@"ellipsis.circle") identifier:nil options:0 children:more]];
+        [feedback addObject:[UIMenu menuWithTitle:@"更多" image:symbol(@"ellipsis.circle") identifier:nil options:0 children:more]];
     }
 
     NSMutableArray<UIMenuElement *> *groups = [NSMutableArray array];
@@ -766,7 +766,7 @@ static void openMenu(SGRPlayerMenuTakeover *t) {
     }
     UIContextMenuInteraction *interaction = t.anchor.contextMenuInteraction;
     if (![interaction respondsToSelector:present]) {
-        reveal(t, button.window ? @"the system menu cannot be opened" : @"the ⋯ is not on screen");
+        reveal(t, button.window ? @"系统菜单无法打开" : @"the ⋯ is not on screen");
         return;
     }
     CGPoint at = CGPointMake(CGRectGetMidX(t.anchor.bounds), CGRectGetMidY(t.anchor.bounds));
@@ -774,7 +774,7 @@ static void openMenu(SGRPlayerMenuTakeover *t) {
     __weak SGRPlayerMenuTakeover *weak = t;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kShowWait * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         SGRPlayerMenuTakeover *strong = weak;
-        if (strong && !strong.shown && !strong.closed) reveal(strong, @"the system menu did not open");
+        if (strong && !strong.shown && !strong.closed) reveal(strong, @"系统菜单未打开");
     });
 }
 
@@ -802,7 +802,7 @@ static void pass(SGRPlayerMenuTakeover *t) {
     t.complete = complete;
     if (first) {
         SGLog(@"redesign player menu: Spotify's rows in %.2f s after the tap, %@%@", CACurrentMediaTime() - t.tappedAt,
-              [signature isEqualToString:t.signature] ? @"the last menu's" : t.signature ? @"not the last menu's" : @"none shown before",
+              [signature isEqualToString:t.signature] ? @"上一菜单的" : t.signature ? @"非上一菜单的" : @"之前未显示",
               complete ? @"" : @" (not all of them read yet)");
     }
     // Only a whole menu is kept for the next one to open on, and a held pick waits for the whole menu
@@ -885,7 +885,7 @@ static SGRPlayerMenuTakeover *takeoverFor(UIViewController *menu) {
             return;
         }
         SGLog(@"redesign player menu: no rows of Spotify's %.0f s after the tap, still waiting with %@", kRowsWait,
-              strong.provisional ? @"the last menu's rows" : @"a loading row");
+              strong.provisional ? @"上一菜单的行" : @"a loading row");
     });
     SGLog(@"redesign player menu: the ⋯'s sheet taken over");
     return t;
@@ -934,7 +934,7 @@ static void logDarkness(UIView *anyView) {
                 NSMutableArray<NSString *> *dark = [NSMutableArray array];
                 findDark(window, window, 1, 0, dark);
                 [lines addObject:[NSString stringWithFormat:@"%@ level %.0f: %@", NSStringFromClass(window.class), window.windowLevel,
-                                  dark.count ? [dark componentsJoinedByString:@"; "] : @"nothing dark over it"]];
+                                  dark.count ? [dark componentsJoinedByString:@"; "] : @"上方无暗色"]];
             }
             SGLog(@"redesign player menu: %.2f s after the sheet began: %@", after.doubleValue, [lines componentsJoinedByString:@" | "]);
         });
@@ -1018,7 +1018,7 @@ static void logDarkness(UIView *anyView) {
     if (leaving) {
         if (t.shown && !t.closed) [t.anchor.contextMenuInteraction dismissMenu];
     } else if (navigation.viewControllers.count > 1) {
-        reveal(t, @"Spotify opened a page of its own on it");
+        reveal(t, @"Spotify 在其上打开了自己的页面");
     }
 }
 

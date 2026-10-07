@@ -148,8 +148,8 @@ static NSData *pageBody(SGLyricsResult *chain, NSData *colours) {
 
 static NSString *timingName(NSArray<SGKaraokeLine *> *lines) {
     switch (SGKaraokeLinesTiming(lines)) {
-        case SGKaraokeTimingWords: return @"word timed";
-        case SGKaraokeTimingLine: return @"line timed";
+        case SGKaraokeTimingWords: return @"逐字计时";
+        case SGKaraokeTimingLine: return @"行计时";
         default: return @"untimed";
     }
 }
@@ -178,7 +178,7 @@ static NSData *decide(NSString *track, SGLyricsResult *chain, NSData *spotifyBod
     if (!donor && spotifyBody.length && SGKaraokeLinesTiming(viewLines) == SGKaraokeTimingNone) SGKaraokeAskSpotifyForTiming(track);
 
     NSString *provider = chain.provider.length ? chain.provider : kUnnamedProvider;
-    NSString *pageGets = page ? [NSString stringWithFormat:@"%@'s lines", provider] : spotifyBody ? @"Spotify's own" : @"none";
+    NSString *pageGets = page ? [NSString stringWithFormat:@"%@'s lines", provider] : spotifyBody ? @"Spotify 自带" : @"none";
     NSString *viewGets = viewLines ? [NSString stringWithFormat:@"%@'s lines, %@", viewLines == spotifyLines ? @"Spotify" : provider, timingName(viewLines)] : @"nothing";
     SGLog(@"lyrics: page of %@ gets %@; the lyrics view gets %@", track, pageGets, viewGets);
     return page;

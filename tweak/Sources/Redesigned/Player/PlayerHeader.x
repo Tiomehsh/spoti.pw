@@ -40,7 +40,7 @@ static void glassInside(UIViewController *unit, NSArray<NSString *> *identifiers
             continue;
         }
         SGRGlassInside(button, &kGlassKey, SGRGlassCircleSize);
-        if ([identifiers[i] isEqualToString:@"Context menu"]) {
+        if ([identifiers[i] isEqualToString:@"上下文菜单"]) {
             SGPlayerMenuWatchMoreButton(button);
             SGRPlayerMenuWatchMoreButton(button);
         }
@@ -58,7 +58,7 @@ static void glassInside(UIViewController *unit, NSArray<NSString *> *identifiers
 
 static void layOutHeader(UIViewController *unit) {
     static const void *keys[] = {&kCloseKey, &kMoreKey};
-    glassInside(unit, @[@"now-playing-minimize-button", @"Context menu"], keys);
+    glassInside(unit, @[@"now-playing-minimize-button", @"上下文菜单"], keys);
 }
 
 %hook _TtC20NowPlaying_ModesImpl18HeaderElementsUnit

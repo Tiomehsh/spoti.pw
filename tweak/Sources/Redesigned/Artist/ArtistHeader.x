@@ -321,7 +321,7 @@ static void applyHeader(UIView *header) {
     if (!logged && header.window && name) {
         logged = YES;
         SGLog(@"redesign artist: own block \"%@\", \"%@\"; shuffle %@, play %@, follow %@, more %@", name,
-              firstText(listeners) ?: @"no listeners", shuffle ? @"found" : @"missing", play ? @"found" : @"missing",
+              firstText(listeners) ?: @"无听众", shuffle ? @"found" : @"missing", play ? @"found" : @"missing",
               follow ? @"found" : @"missing", more ? @"found" : @"missing");
     }
 }

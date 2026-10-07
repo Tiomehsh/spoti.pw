@@ -109,11 +109,11 @@ static void applyBackdrop(UIView *page) {
 #pragma mark - sections
 
 static const struct { __unsafe_unretained NSString *title, *key; BOOL prefix; } sections[] = {
-    {@"More by ", SGHideAlbumMoreBy, YES},
-    {@"Related Music Videos", SGHideAlbumVideos, NO},
-    {@"Concerts", SGHideAlbumConcerts, NO},
-    {@"Merch", SGHideAlbumMerch, NO},
-    {@"You might also like", SGHideAlbumYouMightLike, NO},
+    {@"更多来自", SGHideAlbumMoreBy, YES},
+    {@"相关音乐视频", SGHideAlbumVideos, NO},
+    {@"演出", SGHideAlbumConcerts, NO},
+    {@"周边", SGHideAlbumMerch, NO},
+    {@"你可能也喜欢", SGHideAlbumYouMightLike, NO},
 };
 
 static BOOL sectionHidden(NSString *title) {

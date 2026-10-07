@@ -375,7 +375,7 @@ static void update(void);
 static NSString *nameOf(NSString *source) {
     if ([source isEqualToString:SGArtworkSourceSpotify]) return @"Spotify Canvas";
     if ([source isEqualToString:SGArtworkSourceApple]) return @"Apple Music";
-    return source ?: @"no source";
+    return source ?: @"无来源";
 }
 
 static SGCanvas *canvasOf(SPTPlayerTrack *track) {
@@ -390,10 +390,10 @@ static SPTPlayerTrack *upNext(SPTPlayerState *state) {
 
 // Why no clip may play at all right now, or nil.
 static NSString *heldBack(void) {
-    if (!sg_picked) return @"Fluid artwork is picked";
-    if (NSProcessInfo.processInfo.lowPowerModeEnabled) return @"Low Power Mode";
-    if (SGRReduceMotion()) return @"Reduce Motion";
-    if (sg_videos.allObjects.count) return @"Spotify's own video is showing";
+    if (!sg_picked) return @"已选择流体封面";
+    if (NSProcessInfo.processInfo.lowPowerModeEnabled) return @"低电量模式";
+    if (SGRReduceMotion()) return @"减少动态效果";
+    if (sg_videos.allObjects.count) return @"Spotify 自带视频正在显示";
     return nil;
 }
 
@@ -417,13 +417,13 @@ static void fetch(SGCanvas *clip, BOOL again, void (^done)(NSURL *file, NSString
 static void walk(NSString *uri, SPTPlayerTrack *track, SGCanvas *canvas, NSArray<NSString *> *order, NSUInteger at,
                  void (^done)(NSURL *file, NSString *source, NSString *note)) {
     if (at >= order.count) {
-        done(nil, nil, order.count ? [NSString stringWithFormat:@"none from %@", [order componentsJoinedByString:@", "]] : @"no source is on");
+        done(nil, nil, order.count ? [NSString stringWithFormat:@"none from %@", [order componentsJoinedByString:@", "]] : @"未开启来源");
         return;
     }
     NSString *source = order[at];
     SGArtworkAsk(source, track, canvas, YES, ^(SGCanvas *clip, NSString *note) {
         if (!stillWanted(uri)) {
-            done(nil, nil, @"moved on");
+            done(nil, nil, @"已继续");
             return;
         }
         if (!clip.video) {
@@ -438,7 +438,7 @@ static void walk(NSString *uri, SPTPlayerTrack *track, SGCanvas *canvas, NSArray
             }
             say(@"%@'s clip for %@ not fetched: %@", nameOf(source), uri, fetched);
             if (stillWanted(uri)) walk(uri, track, canvas, order, at + 1, done);
-            else done(nil, nil, @"moved on");
+            else done(nil, nil, @"已继续");
         });
     });
 }
@@ -476,7 +476,7 @@ static void arrived(NSString *uri) {
     } else if ([view.clip.file isEqual:found.file]) {
         say(@"%@ goes on with the same clip", uri);
     } else {
-        say(@"%@ for %@ (%@), %@", nameOf(found.source), uri, found.note, view.clip ? @"crosses over from the last clip" : @"fades in over Fluid artwork");
+        say(@"%@ for %@ (%@), %@", nameOf(found.source), uri, found.note, view.clip ? @"与上一片段交叉过渡" : @"在流体封面上淡入");
         [view showClip:[[SGRPlayerClip alloc] initWithFile:found.file]];
         playOrHold();
     }
@@ -542,10 +542,10 @@ static void playOrHold(void) {
     if (!view) return;
     UIApplicationState state = UIApplication.sharedApplication.applicationState;
     NSString *why = nil;
-    if (!view.window) why = @"the player is not on screen";
-    else if (state != UIApplicationStateActive) why = @"the app is not in front";
-    else if (SGRPlayerIsTransitioning()) why = @"the player opens or closes";
-    else if (SGPlayerState().isPaused) why = @"the song is paused";
+    if (!view.window) why = @"播放器不在屏幕上";
+    else if (state != UIApplicationStateActive) why = @"应用不在前台";
+    else if (SGRPlayerIsTransitioning()) why = @"播放器打开或关闭";
+    else if (SGPlayerState().isPaused) why = @"歌曲已暂停";
     [view setPlaying:!why];
     static NSString *said;
     NSString *now = why ?: @"plays";
@@ -572,12 +572,12 @@ static void update(void) {
 static void covered(BOOL covers) {
     SGRArtworkField *field = sg_field;
     field.covered = covers;
-    say(@"Fluid artwork %@", covers ? @"stops under the clip" : @"draws again");
+    say(@"Fluid artwork %@", covers ? @"止于片段之下" : @"重新绘制");
 }
 
 // The cover goes as a clip fades in and comes back as it fades out, over the same time (PlayerArtwork.x).
 static void shownChanged(BOOL shown, NSTimeInterval duration) {
-    say(@"the cover %@ over %.2f s", shown ? @"goes as the clip fades in" : @"comes back as the clip fades out", duration);
+    say(@"the cover %@ over %.2f s", shown ? @"goes as the clip fades in" : @"随片段淡出而恢复", duration);
     SGRPlayerCoversFollowClip(duration);
 }
 
@@ -666,7 +666,7 @@ static void spotifyVideo(id owner, BOOL attached) {
         else [sg_videos removeObject:owner];
         BOOL now = sg_videos.allObjects.count > 0;
         if (now == was) return;
-        say(@"Spotify's own video %@ (%@)", now ? @"shows" : @"is gone", NSStringFromClass([owner class]));
+        say(@"Spotify's own video %@ (%@)", now ? @"shows" : @"已消失", NSStringFromClass([owner class]));
         update();
     });
 }
@@ -715,7 +715,7 @@ static void spotifyVideo(id owner, BOOL attached) {
     sg_picked = SGRPlayerBackgroundStyle() == SGRPlayerBackgroundAnimated;
     [center addObserverForName:SGRPlayerBackgroundDidChangeNotification object:nil queue:NSOperationQueue.mainQueue usingBlock:^(NSNotification *note) {
         sg_picked = SGRPlayerBackgroundStyle() == SGRPlayerBackgroundAnimated;
-        say(@"%@ picked", sg_picked ? @"Animated artwork" : @"Fluid artwork");
+        say(@"%@ picked", sg_picked ? @"动态封面" : @"流体封面");
         update();
     }];
     // The main queue, since the power state is reported off it.

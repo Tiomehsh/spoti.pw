@@ -20,11 +20,11 @@ typedef struct {
     BOOL percent;
 } SGRFluidSlider;
 
-static const SGRFluidSlider kSpeed = {SGRKeyFluidSpeed, @"Speed", 25, 300, 25, 100, YES};
-static const SGRFluidSlider kWarp = {SGRKeyFluidWarp, @"Warp", 0, 100, 5, 100, YES};
-static const SGRFluidSlider kBlur = {SGRKeyFluidBlur, @"Blur", 2, 24, 1, 8, NO};
-static const SGRFluidSlider kSaturation = {SGRKeyFluidSaturation, @"Saturation", 0, 250, 10, 150, YES};
-static const SGRFluidSlider kBrightness = {SGRKeyFluidBrightness, @"Brightness", 40, 150, 5, 100, YES};
+static const SGRFluidSlider kSpeed = {SGRKeyFluidSpeed, @"速度", 25, 300, 25, 100, YES};
+static const SGRFluidSlider kWarp = {SGRKeyFluidWarp, @"扭曲", 0, 100, 5, 100, YES};
+static const SGRFluidSlider kBlur = {SGRKeyFluidBlur, @"模糊", 2, 24, 1, 8, NO};
+static const SGRFluidSlider kSaturation = {SGRKeyFluidSaturation, @"饱和度", 0, 250, 10, 150, YES};
+static const SGRFluidSlider kBrightness = {SGRKeyFluidBrightness, @"亮度", 40, 150, 5, 100, YES};
 
 static NSInteger stored(SGRFluidSlider slider) {
     return MAX(slider.minimum, MIN(slider.maximum, SGInt(slider.key, slider.fallback)));
@@ -133,15 +133,15 @@ static NSArray<SGModRow *> *shownFor(SGRPlayerBackground background, NSArray<SGM
 
 NSArray<SGModSection *> *SGRPlayerBackgroundSections(void) {
     migrate();
-    NSArray<SGModRow *> *choices = SGChoiceListRows(SGRKeyPlayerBackground, @[@"Fluid artwork", @"Animated artwork"],
-        @[@"The cover itself, blurred and slowly warped", @"The track's Canvas or the album's animated cover, looping"],
+    NSArray<SGModRow *> *choices = SGChoiceListRows(SGRKeyPlayerBackground, @[@"流体封面", @"动态封面"],
+        @[@"封面本身,模糊并缓慢扭曲", @"曲目的 Canvas 或专辑动态封面,循环"],
         kDefaultBackground, ^(NSInteger index) {
             [NSNotificationCenter.defaultCenter postNotificationName:SGRPlayerBackgroundDidChangeNotification object:nil];
         });
 
     SGModRow *preview = SGViewRow([SGRFluidPreview new], kPreviewHeight);
     NSArray<SGModRow *> *sliders = @[sliderRow(kSpeed), sliderRow(kWarp), sliderRow(kBlur), sliderRow(kSaturation), sliderRow(kBrightness)];
-    SGModRow *reset = SGActionRow(@"Reset", nil, ^{
+    SGModRow *reset = SGActionRow(@"重置", nil, ^{
         for (NSString *key in @[SGRKeyFluidSpeed, SGRKeyFluidWarp, SGRKeyFluidBlur, SGRKeyFluidSaturation, SGRKeyFluidBrightness]) {
             [NSUserDefaults.standardUserDefaults removeObjectForKey:key];
         }
@@ -154,7 +154,7 @@ NSArray<SGModSection *> *SGRPlayerBackgroundSections(void) {
         @"Asked top to bottom until one has a clip. Apple Music gets only the artist and album name.");
 
     return @[
-        SGNotedSection(@"Background", choices, @"A paused song holds the background still."),
+        SGNotedSection(@"背景", choices, @"A paused song holds the background still."),
         SGSection(nil, shownFor(SGRPlayerBackgroundFluid, @[preview])),
         SGNotedSection(nil, shownFor(SGRPlayerBackgroundFluid, sliders),
                        @"The player follows these as they move. Brightness past 100% can make white text harder to read on a light cover."),

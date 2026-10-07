@@ -397,7 +397,7 @@ BOOL SGRFire(UIControl *control) {
     NSString *name = NSStringFromClass(control.class);
     if (![logged containsObject:name]) {
         [logged addObject:name];
-        SGLog(@"redesign kit: %@ fires %@ (events 0x%lx)", name, fire == UIControlEventPrimaryActionTriggered ? @"its primary action" : fire ? @"touch up inside" : @"nothing", (unsigned long)registered);
+        SGLog(@"redesign kit: %@ fires %@ (events 0x%lx)", name, fire == UIControlEventPrimaryActionTriggered ? @"其主要操作" : fire ? @"内部触摸抬起" : @"nothing", (unsigned long)registered);
     }
     if (!fire) return NO;
     [control sendActionsForControlEvents:fire];
