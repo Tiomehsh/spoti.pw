@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       ipa_url:
-        description: "Direct link to a decrypted Spotify IPA"
-        required: true
+        description: "Direct link to a decrypted Spotify IPA (leave empty to build only the .deb)"
+        required: false
         type: string
       upload_method:
         description: "Where to put the result"
@@ -40,18 +40,31 @@ jobs:
           python3 -m pip install --break-system-packages git+https://github.com/asdfzxcvbn/pyzule-rw.git
 
       - name: Download IPA
+        if: inputs.ipa_url != ''
         run: |
           mkdir -p ipa
           curl -fsSL "${{ inputs.ipa_url }}" -o ipa/spotify.ipa
           case "$(file --mime-type -b ipa/spotify.ipa)" in application/zip|application/x-ios-app) ;; *) echo "::error::Not an IPA"; exit 1 ;; esac
 
-      - run: make release
+      - name: Build tweak .deb only
+        if: inputs.ipa_url == ''
+        run: env -u MAKELEVEL gmake -C tweak clean package
+
+      - name: Build IPA
+        if: inputs.ipa_url != ''
+        run: make release
 
       - uses: actions/upload-artifact@v5
-        if: inputs.upload_method != 'filebin'
+        if: inputs.upload_method != 'filebin' && inputs.ipa_url != ''
         with:
           name: spoti.ipa
           path: out/*.ipa
+          if-no-files-found: error
+
+      - uses: actions/upload-artifact@v5
+        with:
+          name: spoti.deb
+          path: tweak/packages/*.deb
           if-no-files-found: error
 
       - name: Upload to filebin.net
